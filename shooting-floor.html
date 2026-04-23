@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shooting Floor | Premium Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & VARIABLES ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --gold:    #727272;
+  --gold-dk: #555555;
+  --accent:  #727272;
+  --black:   #000000;
+  --dark:    #111111;
+  --white:   #ffffff;
+  --off-white:#f4f4f4;
+  --text:    #333333;
+  --muted:   #555555;
+  --font-main: 'Montserrat', sans-serif;
+  --spacing: 80px;
+  --max-w:   1200px;
+  --tick-h:  80px;
+}
+
+/* ── TYPOGRAPHY HIERARCHY ── */
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(48px, 7.5vw, 68px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: #f8f8f9;
+  font-weight: 800;
+}
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 5.5vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #000000;
+  text-transform: uppercase;
+}
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(18px, 2.2vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #111111;
+}
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.1vw, 15px);
+  letter-spacing: 0.05em;
+  color: #727272;
+  margin-bottom: 14px;
+}
+h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+  background: #fff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ══ OFFCANVAS ══ */
+.offcanvas {
+  position: fixed; inset: 0; z-index: 999;
+  display: grid; grid-template-columns: 1fr 1fr;
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+}
+.offcanvas.open { transform: translateX(0); }
+.oc-left {
+  background: #f8f8f9; padding: 40px 48px;
+  display: flex; flex-direction: column; gap: 48px;
+  border-right: 1px solid #e0e0e0;
+}
+.oc-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: .08em; color: #1a1a2e; }
+.oc-top-row { display: flex; align-items: center; justify-content: space-between; }
+.oc-close {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Montserrat', sans-serif; font-size: .8rem;
+  font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: #111; background: none; cursor: pointer;
+  padding: 8px 16px; border: 1px solid #ccc; border-radius: 100px; transition: all .25s;
+}
+.oc-close:hover { background: #111; color: #fff; border-color: #111; }
+.oc-nav { list-style: none; display: flex; flex-direction: column; }
+.oc-nav > li { border-bottom: 1px solid #e8e8e8; overflow: visible; }
+.oc-nav > li > a {
+  display: block; padding: 20px 0;
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: clamp(22px, 3vw, 36px); color: #111;
+  text-decoration: none; letter-spacing: -.01em;
+  transition: color .2s, padding-left .2s; position: relative;
+}
+.oc-nav > li > a::after { content: '→'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: .9rem; color: #ccc; transition: color .2s; }
+.oc-nav > li > a:hover { color: #219cca; padding-left: 8px; }
+.oc-nav > li > a:hover::after { color: #219cca; }
+.oc-submenu { list-style: none; padding: 0 0 12px 16px; display: none; }
+.oc-nav li.has-sub:hover .oc-submenu { display: block; }
+.oc-submenu li a {
+  display: block; padding: 6px 0; font-family: 'Montserrat', sans-serif;
+  font-size: .88rem; color: #555; text-decoration: none; transition: color .2s;
+}
+.oc-submenu li a:hover { color: #219cca; }
+.oc-right { background: #000000; padding: 40px 48px; display: flex; flex-direction: column; }
+.oc-right-top { display: flex; justify-content: flex-end; margin-bottom: 60px; }
+.oc-close-right {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2); background: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .25s; color: #fff;
+}
+.oc-close-right:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.5); }
+.oc-get-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; color: #fff; margin-bottom: 36px; }
+.oc-info-block { margin-bottom: 28px; }
+.oc-info-val { font-family: 'Montserrat', sans-serif; font-size: .95rem; color: rgba(255,255,255,.85); line-height: 1.7; }
+.oc-info-val a { color: rgba(255,255,255,.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.2); transition: border-color .2s, color .2s; }
+.oc-info-val a:hover { color: #219cca; border-color: #219cca; }
+.oc-socials { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.oc-soc {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.7); font-family: 'Montserrat', sans-serif;
+  font-size: .78rem; font-weight: 700;
+  text-decoration: none; transition: all .25s;
+}
+.oc-soc:hover { background: linear-gradient(135deg,#00A0C0,#20C0D0,#4080C0,#6060A0); border-color: transparent; color: #fff; }
+
+/* ══ HEADER ══ */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 48px; display: flex; align-items: center; justify-content: space-between;
+  transition: background .4s, box-shadow .4s;
+}
+header.scrolled { background: rgba(248,248,249,.96); box-shadow: 0 1px 0 rgba(0,0,0,.06); backdrop-filter: blur(10px); }
+.hdr-logo {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem;
+  letter-spacing: .1em; background: transparent; color: #fff;
+  width: auto; height: 50px; border-radius: 0; border: none;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; transition: all .3s;
+}
+.hdr-ham {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.4);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 5px; background: none; cursor: pointer; transition: all .3s;
+}
+header.scrolled .hdr-ham { border-color: rgba(0,0,0,.2); }
+.hdr-ham span { display: block; width: 18px; height: 1.5px; background: #fff; transition: background .3s; }
+header.scrolled .hdr-ham span { background: #1a1a2e; }
+.hdr-ham:hover { background: rgba(255,255,255,.1); }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(50px); transition:all .8s ease-out; }
+.reveal.active { opacity:1; transform:translateY(0); }
+
+/* ── CONTAINER ── */
+.container { width:90%; max-width:var(--max-w); margin:0 auto; padding:0 15px; }
+
+/* ════════════════════════════
+   SECTION 1 — HERO
+════════════════════════════ */
+.hero {
+  position:relative; height:100vh; min-height:600px;
+  width:100%; display:flex; align-items:flex-end; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover;
+  z-index:1; transition:transform 10s ease;
+}
+.hero:hover .hero-bg { transform:scale(1.05); }
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.1) 60%,rgba(0,0,0,.25) 100%);
+  z-index:2;
+}
+.hero-content {
+  position:relative; z-index:3;
+  padding-bottom:80px;
+  color:var(--white); max-width:800px;
+}
+.hero-tag {
+  display:inline-block; background:#000000; color:#727272;
+  padding:5px 14px; font-size:.72rem; font-weight:700;
+  text-transform:uppercase; margin-bottom:16px; letter-spacing:1.5px;
+  font-family: 'Montserrat', sans-serif;
+}
+.hero h1 { color: #f8f8f9; }
+.hero p {
+  font-family: 'Montserrat', sans-serif;
+  font-size:16px; max-width:600px; color:rgba(255,255,255,.88); font-weight:400;
+}
+
+/* ════════════════════════════
+   SECTION 2 — ABOUT
+════════════════════════════ */
+.section-padding { padding:var(--spacing) 0; }
+
+.about-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:60px; align-items:center;
+}
+.section-title {
+  margin-bottom:20px;
+  position:relative;
+}
+.section-title::after {
+  content:''; display:block;
+  width:60px; height:4px;
+  background:#727272; margin-top:14px;
+}
+.about-text p {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom:20px; color:var(--muted);
+}
+.feature-list {
+  margin-top:30px; display:grid;
+  grid-template-columns:1fr 1fr; gap:16px;
+}
+.feature-item {
+  display:flex; align-items:center; gap:10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight:600; color:#727272;
+}
+.feature-item span { color:#727272; font-size:1.1rem; }
+
+.about-img-wrap {
+  background:var(--off-white); height:100%;
+  min-height:320px; border-radius:4px;
+  position:relative; overflow:hidden;
+}
+.about-img-wrap img { width:100%; height:100%; object-fit:cover; opacity:.85; }
+.about-badge {
+  position:absolute; bottom:20px; left:20px;
+  background:white; padding:14px 18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.12);
+  font-family: 'Montserrat', sans-serif;
+  font-weight:700; font-size:.9rem;
+}
+
+/* ════════════════════════════
+   SECTION 3 — EXPERIENCE
+════════════════════════════ */
+
+/* Ticker */
+.ticker {
+  background:var(--black);
+  height:var(--tick-h);
+  overflow:hidden;
+  border-bottom:1px solid #1a1a1a;
+  display:flex; align-items:center;
+}
+.ticker__track {
+  display:flex; align-items:center;
+  width:max-content;
+  animation:tick-scroll 22s linear infinite;
+  will-change:transform;
+}
+.ticker__item {
+  font-family: 'Montserrat', sans-serif;
+  font-size:56px; color:#727272;
+  letter-spacing:6px; padding-right:48px;
+  white-space:nowrap; line-height:1;
+  text-transform:uppercase; font-weight: 800;
+}
+.ticker__item .dot {
+  display:inline-block; width:10px; height:10px;
+  background:#555555; border-radius:50%;
+  margin:0 32px 6px; vertical-align:middle;
+}
+@keyframes tick-scroll {
+  from { transform:translateX(0); }
+  to   { transform:translateX(-50%); }
+}
+
+/* Carousel */
+.carousel-section {
+  background:var(--black);
+  padding:20px 20px 28px;
+  position:relative;
+}
+.carousel-viewport { overflow:hidden; border-radius:4px; width:100%; }
+.carousel-track {
+  display:flex; gap:10px;
+  transition:transform .65s cubic-bezier(.25,.46,.45,.94);
+  will-change:transform;
+}
+.carousel-slide {
+  flex:0 0 calc((100% - 20px)/3);
+  position:relative; overflow:hidden;
+  border-radius:3px; aspect-ratio:4/3;
+  cursor:pointer; background:var(--dark);
+}
+.carousel-slide img {
+  width: 100%; height: 100%;
+  display: block; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.carousel-slide:hover img { transform: scale(1.05); }
+.slide__overlay {
+  position:absolute; inset:0;
+  background:rgba(0,0,0,0);
+  transition:background .4s ease;
+  display:flex; align-items:flex-end; padding:18px;
+}
+.carousel-slide:hover .slide__overlay { background:rgba(0,0,0,.35); }
+.slide__label {
+  font-family: 'Montserrat', sans-serif;
+  font-size:11px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--white); opacity:0;
+  transform:translateY(8px);
+  transition:opacity .35s ease,transform .35s ease;
+}
+.carousel-slide:hover .slide__label { opacity:1; transform:translateY(0); }
+
+/* arrows */
+.carousel-btn {
+  position:absolute; top:50%; transform:translateY(-70%);
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.15);
+  color:var(--white); width:42px; height:42px;
+  border-radius:50%; display:flex; align-items:center;
+  justify-content:center; font-size:18px;
+  cursor:pointer; z-index:10;
+  transition:background .2s,border-color .2s;
+  font-family: 'Montserrat', sans-serif;
+}
+.carousel-btn:hover { background:#727272; border-color:#727272; color:var(--white); }
+.carousel-btn.prev { left:28px; }
+.carousel-btn.next { right:28px; }
+
+/* dots */
+.carousel-dots { display:flex; justify-content:center; gap:8px; margin-top:16px; }
+.carousel-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:#333; border:none; cursor:pointer;
+  transition:background .3s,transform .3s; padding:0;
+}
+.carousel-dot.active { background:#727272; transform:scale(1.4); }
+
+/* Dark Bar */
+.dark-bar {
+  background:var(--black);
+  padding:26px 20px;
+  display:flex; align-items:center; justify-content:center;
+  border-top:1px solid #1a1a1a;
+  border-bottom:4px solid #727272;
+}
+.dark-bar h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(18px, 2.2vw, 30px);
+  letter-spacing: 4px;
+  color: #727272;
+  text-transform: uppercase;
+}
+
+/* ── WHY FILM WITH US ── */
+.whyfilm-section {
+  padding: 60px 20px;
+  text-align: center;
+  height:400px;
+  background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.95)),
+              url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d') center/cover no-repeat;
+}
+.whyfilm-section h2 {
+  margin-bottom: 40px;
+}
+.whyfilm-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.whyfilm-card {
+  background: #eae6e1;
+  padding: 25px 20px;
+  width: 300px;
+  border-radius: 6px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+.whyfilm-card:hover { transform: translateY(-5px); }
+.whyfilm-card h4 {
+  margin: 0;
+  color: #727272;
+  line-height: 1.4;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(13px, 1.1vw, 15px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── STANDOUT SECTION ── */
+.standout-section {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 90px 20px;
+  background: #080808;
+  text-align: center;
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height:500px;
+}
+.standout-section h2 {
+  color: #fff;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+  font-size: clamp(30px, 5.5vw, 68px);
+  letter-spacing: -0.02em;
+}
+.standout-subtext {
+  font-family: 'Montserrat', sans-serif;
+  color: rgba(255,255,255,0.65);
+  font-size: 16px;
+  position: relative;
+  z-index: 2;
+}
+.standout-subtext span { color: #fff; font-weight: 600; }
+.standout-btn {
+  margin-top: 28px;
+  padding: 15px 42px;
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.45);
+  transition: background 0.3s, border-color 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.standout-btn:hover { background: #727272; border-color: rgba(255,255,255,0.9); }
+.standout-btn a { color: #fff; text-decoration: none; font-family: 'Montserrat', sans-serif; }
+
+/* Globe canvas sits behind all content */
+#globeCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Sparkle diamond decorations */
+.sparkle {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  animation: sparklePulse 2.8s ease-in-out infinite;
+}
+.sparkle::before, .sparkle::after {
+  content: '';
+  position: absolute;
+  background: #fff;
+  border-radius: 1px;
+}
+.sparkle::before { width: 1.5px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
+.sparkle::after  { height: 1.5px; width: 100%; top: 50%; left: 0; transform: translateY(-50%); }
+.sparkle-1 { width: 20px; height: 20px; bottom: 28px; right: 48px; animation-delay: 0s; }
+.sparkle-2 { width: 13px; height: 13px; top: 28px; left: 70px; animation-delay: 1s; opacity: 0.6; }
+.sparkle-3 { width: 10px; height: 10px; top: 45%; right: 90px; animation-delay: 1.9s; opacity: 0.5; }
+@keyframes sparklePulse {
+  0%, 100% { opacity: 0.25; transform: scale(0.8) rotate(0deg); }
+  50%       { opacity: 1;    transform: scale(1.15) rotate(45deg); }
+}
+
+/* ══ FOOTER ══ */
+.site-footer { background: #0f1014; color: #ffffff; padding: 80px 0 30px; font-family: 'Montserrat', sans-serif; border-top: 1px solid rgba(255,255,255,0.05); }
+.footer-container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1fr; gap: 40px; }
+.footer-brand { padding-right: 20px; }
+.footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+.s-logo { width: auto; height: 50px; border-radius: 0; display: block; object-fit: contain; }
+.footer-desc { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.6; color: #888; max-width: 250px; }
+.site-footer h5 { color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 14px; }
+.footer-links a { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; text-decoration: none; transition: color 0.3s ease, padding-left 0.3s ease; }
+.footer-links a:hover { color: #fff; padding-left: 5px; }
+.contact-item { margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; }
+.contact-icon { margin-top: 3px; color: #555; }
+.contact-text { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.5; }
+.contact-text strong { display: block; color: #fff; margin-bottom: 4px; font-weight: 700; }
+.social-grid { display: flex; gap: 15px; margin-top: 10px; }
+.social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: all 0.3s ease; }
+.social-link:hover { background: #fff; color: #0f1014; transform: translateY(-3px); }
+.social-link svg { width: 16px; height: 16px; fill: currentColor; }
+.footer-bottom { margin-top: 70px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #666; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .about-grid { grid-template-columns:1fr; }
+}
+@media (max-width:768px) {
+  .ticker__item { font-size:36px; }
+  :root { --tick-h:56px; }
+  .carousel-slide { flex:0 0 100%; }
+  .carousel-btn.prev { left:10px; }
+  .carousel-btn.next { right:10px; }
+  .dark-bar { flex-direction:column; gap:16px; text-align:center; }
+  .hero { align-items:center; text-align:center; }
+  .hero-content { margin:0 auto; padding-top:20px; }
+  header { padding: 16px 24px; }
+  .offcanvas { grid-template-columns: 1fr; }
+  .oc-right { display: none; }
+  .oc-left { padding: 32px 28px; }
+  .footer-container { grid-template-columns: 1fr 1fr; padding: 0 28px; }
+  .footer-brand { grid-column: span 2; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; padding: 24px 28px; }
+}
+@media (max-width:480px) {
+  .footer-container { grid-template-columns: 1fr; }
+  .footer-brand { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ OFFCANVAS ══ -->
+<div class="offcanvas" id="offcanvas">
+  <div class="oc-left">
+    <div class="oc-top-row">
+      <span class="oc-logo-text">BLOSSOM</span>
+      <button class="oc-close" onclick="toggleMenu()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Close
+      </button>
+    </div>
+    <ul class="oc-nav">
+      <li><a href="index">Home</a></li>
+      <li><a href="about">About</a></li>
+      <li class="has-sub">
+        <a href="#">Services</a>
+        <ul class="oc-submenu">
+          <li><a href="shooting-floor">Shooting Floor</a></li>
+          <li><a href="video-editing">Video Editing</a></li>
+          <li><a href="video-production">Video Production</a></li>
+        </ul>
+      </li>
+      <li><a href="contact-us">Contact</a></li>
+    </ul>
+  </div>
+  <div class="oc-right">
+    <div class="oc-right-top">
+      <button class="oc-close-right" onclick="toggleMenu()" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <p class="oc-get-title">Get in Touch</p>
+    <div class="oc-info-block"><span class="oc-info-label">Email</span><div class="oc-info-val"><a href="mailto:blossomitandmediaservices@gmail.com">blossomitandmediaservices@gmail.com</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Phone</span><div class="oc-info-val"><a href="tel:+91 99469 99460">+91 9946999460</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Location</span><div class="oc-info-val">1st Floor, Dune Centre, 7/359/34,T.K Krishnan Rd, Kunnamkulam, Kerala 680503</div></div>
+    <div class="oc-info-block">
+      <span class="oc-info-label">Follow Us</span>
+      <div class="oc-socials">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="oc-soc">Ig</a>
+        <a href="https://www.youtube.com/@blossomads" aria-label="YouTube" class="oc-soc">Yt</a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="oc-soc">Fb</a>
+        <a href="https://api.whatsapp.com/send/?phone=919946099469&text&type=phone_number&app_absent=0" aria-label="WhatsApp" class="oc-soc">Wa</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <a href="index" class="hdr-logo" aria-label="Blossom Home">
+    <img src="images/blossom-logo.jpg" alt="Blossom Logo" style="height: 100%; width: auto; display: block;">
+  </a>
+  <button class="hdr-ham" onclick="toggleMenu()" aria-label="Open Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ══ 1. HERO ══ -->
+<section class="hero">
+  <img src="https://www.reliancebahrain.org/static/images/general/studio_card.jpg"
+       alt="Premium Studio Shooting Floor" class="hero-bg"/>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content reveal">
+      <span class="hero-tag">Professional Environment</span>
+      <h1>PREMIUM STUDIO SHOOTING FLOOR</h1>
+      <p>A premium studio shooting floor gives Blossom Media the perfect setting for quality advertising.
+        The polished setup ensures smooth shoots and a strong brand experience</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2. ABOUT ══ -->
+<section class="section-padding">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2 class="section-title">Designed for Creativity</h2>
+        <p>Blossom Media offers a versatile shooting floor built for advertising projects of every scale. With a clean, professional setup and plenty of space, it helps bring creative ideas to life with ease.</p>
+        <p>Blossom Media's shooting floor features a refined, professional setup that creates a clean contrast and supports a polished visual style. It is designed to adapt easily to fashion, product, and portrait shoots, helping every project match your creative vision.</p>
+        <div class="feature-list">
+          <div class="feature-item"><span>✓</span> Spacious Layout</div>
+          <div class="feature-item"><span>✓</span> White Cyclorama</div>
+          <div class="feature-item"><span>✓</span> Wooden Flooring</div>
+          <div class="feature-item"><span>✓</span> High Ceilings</div>
+        </div>
+      </div>
+      <div class="about-img-wrap reveal">
+        <img src="images/Designed-for-Creativity.png" alt="Studio Interior">
+        <div class="about-badge">Pro Gear Included</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. TICKER ══ -->
+<div class="ticker" aria-label="Experience The Marquee">
+  <div class="ticker__track">
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+    <span class="ticker__item">EXPERIENCE THE <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- ══ CAROUSEL ══ -->
+<section class="carousel-section" aria-label="Studio gallery">
+  <button class="carousel-btn prev" id="prevBtn" aria-label="Previous">&#8592;</button>
+  <button class="carousel-btn next" id="nextBtn" aria-label="Next">&#8594;</button>
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slide" tabindex="0">
+        <img src="images/makeup-room.png" alt="Makeup Room">
+        <div class="slide__overlay"><span class="slide__label">Studio View 01</span></div>
+      </div>
+      <div class="carousel-slide" tabindex="0">
+        <img src="images/blossom-shooting.png" alt="Blossom Shooting">
+        <div class="slide__overlay"><span class="slide__label">Studio View 02</span></div>
+      </div>
+      <div class="carousel-slide" tabindex="0">
+        <img src="images/podcast-interviews.png" alt="Podcast Interviews">
+        <div class="slide__overlay"><span class="slide__label">Studio View 03</span></div>
+      </div>
+      <div class="carousel-slide" tabindex="0">
+        <img src="images/creative-content.png" alt="Creative Content">
+        <div class="slide__overlay"><span class="slide__label">Studio View 04</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+<!-- ══ DARK BAR ══ -->
+<div class="dark-bar">
+  <h3>THE STUDIO</h3>
+</div>
+
+<!-- ══ WHY FILM WITH US ══ -->
+<section class="whyfilm-section">
+  <h2>WHY FILM WITH US?</h2>
+  <div class="whyfilm-grid">
+    <div class="whyfilm-card">
+      <h4>KERALA'S MOST ACCESSIBLE<br>STUDIO: MINS FROM WEH</h4>
+    </div>
+    <div class="whyfilm-card">
+      <h4>PRODUCTION-READY: NO HIDDEN COSTS</h4>
+    </div>
+    <div class="whyfilm-card">
+      <h4>DEDICATED SUPPORT TEAM<br>AVAILABLE 24/7</h4>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STANDOUT SECTION ══ -->
+<section class="standout-section">
+  <canvas id="globeCanvas"></canvas>
+  <div class="sparkle sparkle-1"></div>
+  <div class="sparkle sparkle-2"></div>
+  <div class="sparkle sparkle-3"></div>
+  <h2>Get ready to stand out</h2>
+  <p class="standout-subtext">We produce <span>Premium Videos</span> for your Brands</p>
+  <button class="standout-btn"><a href="contact-us">Contact Us</a></button>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="footer-logo-text">
+        <img src="images/blossom-logo.jpg" alt="Blossom Logo" class="s-logo">
+        BLOSSOM
+      </div>
+      <p class="footer-desc">Building sustainable brands through creative video production, expert editing, and compelling storytelling. Kerala's trusted production partner.</p>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Our Services</h5>
+      <ul class="footer-links">
+        <li><a href="shooting-floor">Shooting Floor</a></li>
+        <li><a href="video-editing">Video Editing</a></li>
+        <li><a href="video-production">Video Production</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Policies</h5>
+      <ul class="footer-links">
+        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund &amp; Cancellation</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Locate Us</h5>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div class="contact-text">
+          <strong>Head Office</strong>
+          Blossom Advertising Media and Studio Floor Kerala, India
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div class="contact-text"><a href="tel:+91 9946999460" style="color:inherit;text-decoration:none;">+91 99469 99460</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-text"><a href="mailto:info@blossomit.company" style="color:inherit;text-decoration:none;">info@blossomit.company</a></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Connect With Us</h5>
+      <div class="social-grid">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@blossomads" class="social-link" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-2.47 12.35 12.35 0 00-7.64 0A4.83 4.83 0 014.41 6.69 44.37 44.37 0 002 12a44.37 44.37 0 002.41 5.31 4.83 4.83 0 003.77 2.47 12.35 12.35 0 007.64 0 4.83 4.83 0 003.77-2.47A44.37 44.37 0 0022 12a44.37 44.37 0 00-2.41-5.31zM10 15V9l5 3-5 3z"/></svg>
+        </a>
+        <a href="https://wa.me/919946099469" class="social-link" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container" style="padding-top:0;">
+    <div class="footer-bottom" style="width:100%;grid-column:1/-1;">
+      <span>© 2026 Blossom Ads &amp; Media. All rights reserved.</span>
+      <span>Designed with ❤️ by Blossom Team</span>
+    </div>
+  </div>
+</footer>
+<script>
+  /* ── MENU TOGGLE ── */
+  function toggleMenu() {
+    document.getElementById('offcanvas').classList.toggle('open');
+  }
+
+  /* ── HEADER SCROLL ── */
+  window.addEventListener('scroll', function () {
+    document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ── CAROUSEL ── */
+  const track     = document.getElementById('carouselTrack');
+  const originals = Array.from(track.querySelectorAll('.carousel-slide'));
+  const dotsWrap  = document.getElementById('carouselDots');
+  const prevBtn   = document.getElementById('prevBtn');
+  const nextBtn   = document.getElementById('nextBtn');
+  const GAP = 10;
+  let current = 0, autoTimer;
+
+  originals.forEach(s => track.appendChild(s.cloneNode(true)));
+
+  originals.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  });
+
+  function sw() {
+    return (track.parentElement.offsetWidth - GAP * (originals.length - 1)) / originals.length;
+  }
+  function moveTo(animated) {
+    track.style.transition = animated ? 'transform .65s cubic-bezier(.25,.46,.45,.94)' : 'none';
+    track.style.transform = `translateX(-${current * (sw() + GAP)}px)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current % originals.length));
+  }
+  function goTo(i)  { current = i; moveTo(true); resetAuto(); }
+  function next() {
+    current++;
+    if (current >= originals.length) {
+      moveTo(true);
+      setTimeout(() => { current = 0; moveTo(false); }, 680);
+    } else { moveTo(true); }
+    document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current % originals.length));
+    resetAuto();
+  }
+  function prev() {
+    current = current === 0 ? originals.length - 1 : current - 1;
+    moveTo(true);
+    document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current % originals.length));
+    resetAuto();
+  }
+  function resetAuto() { clearInterval(autoTimer); autoTimer = setInterval(next, 3500); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  let tx = 0;
+  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const d = tx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 40) d > 0 ? next() : prev();
+  });
+  window.addEventListener('resize', () => moveTo(false));
+  moveTo(false);
+  autoTimer = setInterval(next, 3500);
+
+  /* ── GLOBE NETWORK ANIMATION ── */
+  (function() {
+    const canvas = document.getElementById('globeCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let W, H, cx, cy, R;
+    const NODES = 38;
+    const nodes = [];
+    let rot = 0;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      cx = W / 2; cy = H / 2;
+      R = Math.min(W, H) * 0.42;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Generate points on a sphere using Fibonacci lattice
+    for (let i = 0; i < NODES; i++) {
+      const phi   = Math.acos(1 - 2 * (i + 0.5) / NODES);
+      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+      nodes.push({ phi, theta,
+        pulseOffset: Math.random() * Math.PI * 2,
+        pulseSpeed:  0.8 + Math.random() * 1.2
+      });
+    }
+
+    // Edges: connect nearby nodes
+    const edges = [];
+    for (let a = 0; a < NODES; a++) {
+      for (let b = a + 1; b < NODES; b++) {
+        // dot product to find angular distance
+        const ax = Math.sin(nodes[a].phi) * Math.cos(nodes[a].theta);
+        const ay = Math.sin(nodes[a].phi) * Math.sin(nodes[a].theta);
+        const az = Math.cos(nodes[a].phi);
+        const bx = Math.sin(nodes[b].phi) * Math.cos(nodes[b].theta);
+        const by = Math.sin(nodes[b].phi) * Math.sin(nodes[b].theta);
+        const bz = Math.cos(nodes[b].phi);
+        const dot = ax*bx + ay*by + az*bz;
+        if (dot > 0.78) edges.push([a, b]);
+      }
+    }
+
+    function project(phi, theta) {
+      const sinP = Math.sin(phi), cosP = Math.cos(phi);
+      const sinT = Math.sin(theta + rot), cosT = Math.cos(theta + rot);
+      const x3 = sinP * cosT;
+      const y3 = cosP;
+      const z3 = sinP * sinT;
+      return { x: cx + R * x3, y: cy + R * y3, z: z3 };
+    }
+
+    let last = 0;
+    function draw(ts) {
+      const dt = Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+      rot += dt * 0.18;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Draw latitude / longitude grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = 0.7;
+      const LATS = 8, LNGS = 12;
+      for (let i = 1; i < LATS; i++) {
+        const phi = (i / LATS) * Math.PI;
+        ctx.beginPath();
+        for (let j = 0; j <= 64; j++) {
+          const theta = (j / 64) * Math.PI * 2;
+          const p = project(phi, theta);
+          if (p.z < -0.1) continue;
+          j === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        }
+        ctx.stroke();
+      }
+      for (let j = 0; j < LNGS; j++) {
+        const theta = (j / LNGS) * Math.PI * 2;
+        ctx.beginPath();
+        for (let i = 0; i <= 64; i++) {
+          const phi = (i / 64) * Math.PI;
+          const p = project(phi, theta);
+          if (p.z < -0.1) continue;
+          i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        }
+        ctx.stroke();
+      }
+
+      // Project all nodes
+      const pts = nodes.map(n => project(n.phi, n.theta));
+
+      // Draw edges (only front-facing)
+      edges.forEach(([a, b]) => {
+        const pa = pts[a], pb = pts[b];
+        if (pa.z < 0 || pb.z < 0) return;
+        const alpha = Math.min(pa.z, pb.z) * 0.5;
+        ctx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(2)})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(pa.x, pa.y);
+        ctx.lineTo(pb.x, pb.y);
+        ctx.stroke();
+      });
+
+      // Draw nodes
+      nodes.forEach((n, i) => {
+        const p = pts[i];
+        if (p.z < 0) return;
+        const pulse = 0.6 + 0.4 * Math.sin(ts * 0.001 * n.pulseSpeed + n.pulseOffset);
+        const r = (2.5 + 2 * pulse) * p.z;
+        const alpha = p.z * pulse;
+
+        // Glow
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3.5);
+        grd.addColorStop(0, `rgba(255,255,255,${(alpha * 0.5).toFixed(2)})`);
+        grd.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r * 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(2)})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  const reveals = document.querySelectorAll('.reveal');
+  function revealCheck() {
+    const vh = window.innerHeight;
+    reveals.forEach(el => {
+      if (el.getBoundingClientRect().top < vh - 100) el.classList.add('active');
+    });
+  }
+  window.addEventListener('scroll', revealCheck);
+  revealCheck();
+</script>
+</body>
+</html>

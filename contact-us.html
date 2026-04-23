@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Updated Font Import to Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ══ GLOBAL RESET ══ */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* ══ TYPOGRAPHY HIERARCHY ══ */
+        h1 {
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-size: clamp(48px, 7.5vw, 88px);
+            line-height: 0.92;
+            letter-spacing: -0.01em;
+            color: #f8f8f9;
+            font-weight: 700;
+        }
+        h2 {
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-weight: 800;
+            font-size: clamp(32px, 5.5vw, 54px);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: #000000;
+            text-transform: uppercase;
+        }
+        h3 {
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-weight: 800;
+            font-size: clamp(18px, 2.2vw, 30px);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: #111111;
+        }
+        h4 {
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-weight: 700;
+            font-size: clamp(13px, 1.1vw, 15px);
+            letter-spacing: 0.05em;
+            /* Updated Color from Yellow (#e89020) to Grey (#727272) */
+            color: #727272;
+            margin-bottom: 14px;
+        }
+        h5 {
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+       /* ══ OFFCANVAS ══ */
+  .offcanvas {
+    position: fixed; inset: 0; z-index: 999;
+    display: grid; grid-template-columns: 1fr 1fr;
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+  }
+  .offcanvas.open { transform: translateX(0); }
+  .oc-left {
+    background: #f8f8f9; padding: 40px 48px;
+    display: flex; flex-direction: column; gap: 48px;
+    border-right: 1px solid #e0e0e0;
+  }
+  .oc-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: .08em; color: #1a1a2e; }
+  .oc-top-row { display: flex; align-items: center; justify-content: space-between; }
+  .oc-close {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Montserrat', sans-serif; font-size: .8rem;
+    font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #111; background: none; cursor: pointer;
+    padding: 8px 16px; border: 1px solid #ccc; border-radius: 100px; transition: all .25s;
+  }
+  .oc-close:hover { background: #111; color: #fff; border-color: #111; }
+  .oc-nav { list-style: none; display: flex; flex-direction: column; }
+  .oc-nav > li { border-bottom: 1px solid #e8e8e8; overflow: visible; }
+  .oc-nav > li > a {
+    display: block; padding: 20px 0;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: clamp(22px, 3vw, 36px); color: #111;
+    text-decoration: none; letter-spacing: -.01em;
+    transition: color .2s, padding-left .2s; position: relative;
+  }
+  .oc-nav > li > a::after { content: '→'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: .9rem; color: #ccc; transition: color .2s; }
+  .oc-nav > li > a:hover { color: #219cca; padding-left: 8px; }
+  .oc-nav > li > a:hover::after { color: #219cca; }
+  .oc-submenu { list-style: none; padding: 0 0 12px 16px; display: none; }
+  .oc-nav li.has-sub:hover .oc-submenu { display: block; }
+  .oc-submenu li a {
+    display: block; padding: 6px 0; font-family: 'Montserrat', sans-serif;
+    font-size: .88rem; color: #555; text-decoration: none; transition: color .2s;
+  }
+  .oc-submenu li a:hover { color: #219cca; }
+  .oc-right { background: #000000; padding: 40px 48px; display: flex; flex-direction: column; }
+  .oc-right-top { display: flex; justify-content: flex-end; margin-bottom: 60px; }
+  .oc-close-right {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2); background: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .25s; color: #fff;
+  }
+  .oc-close-right:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.5); }
+  .oc-get-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; color: #fff; margin-bottom: 36px; }
+  .oc-info-block { margin-bottom: 28px; }
+  .oc-info-val { font-family: 'Montserrat', sans-serif; font-size: .95rem; color: rgba(255,255,255,.85); line-height: 1.7; }
+  .oc-info-val a { color: rgba(255,255,255,.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.2); transition: border-color .2s, color .2s; }
+  .oc-info-val a:hover { color: #219cca; border-color: #219cca; }
+  .oc-socials { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .oc-soc {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.7); font-family: 'Montserrat', sans-serif;
+    font-size: .78rem; font-weight: 700;
+    text-decoration: none; transition: all .25s;
+  }
+  .oc-soc:hover { background: linear-gradient(135deg,#00A0C0,#20C0D0,#4080C0,#6060A0); border-color: transparent; color: #fff; }
+
+  /* ══ HEADER ══ */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px; display: flex; align-items: center; justify-content: space-between;
+    transition: background .4s, box-shadow .4s;
+  }
+  header.scrolled { background: rgba(248,248,249,.96); box-shadow: 0 1px 0 rgba(0,0,0,.06); backdrop-filter: blur(10px); }
+  .hdr-logo {
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem;
+    letter-spacing: .1em; background: transparent; color: #fff;
+    width: auto; height: 50px; border-radius: 0; border: none;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: all .3s;
+  }
+  .hdr-ham {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.4);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 5px; background: none; cursor: pointer; transition: all .3s;
+  }
+  header.scrolled .hdr-ham { border-color: rgba(0,0,0,.2); }
+  .hdr-ham span { display: block; width: 18px; height: 1.5px; background: #fff; transition: background .3s; }
+  header.scrolled .hdr-ham span { background: #1a1a2e; }
+  .hdr-ham:hover { background: rgba(255,255,255,.1); }
+        /* ══ HERO SECTION ══ */
+        .hero-layout {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            max-height: 900px;
+            overflow: hidden;
+            background-image: url('https://i.ibb.co/wryHdrwL/contact-banner.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .layout-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0,15,40,0.85) 0%, rgba(0,30,60,0.7) 100%);
+            z-index: 1;
+        }
+
+        main {
+            position: relative;
+            z-index: 2;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .main-headline h1 span {
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            .offcanvas { grid-template-columns: 1fr; }
+            .oc-right { display: none; }
+            .oc-left { width: 100%; }
+        }
+
+        /* ══ GET IN TOUCH SECTION ══ */
+        .get-in-touch-section {
+            background-color: #ffffff;
+            padding: 120px 20px;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            color: #1a1a1a;
+        }
+
+        .contact-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        /* Left Column */
+        .contact-left h2 {
+            margin-bottom: 24px;
+        }
+
+        .contact-slogan {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666666;
+            margin-bottom: 60px;
+            max-width: 90%;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-weight: 400;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999999;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+        }
+
+        .info-text {
+            font-size: 12evm;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #000000;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+        }
+
+        .info-text.link {
+            text-decoration: none;
+            border-bottom: 1px solid #e0e0e0;
+            transition: border-color 0.3s ease;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .info-text.link:hover { border-color: #000; }
+
+        /* Right Column Form */
+        .form-group { margin-bottom: 30px; }
+
+        .contact-right input,
+        .contact-right textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 15px 0;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            color: #000;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-right input::placeholder,
+        .contact-right textarea::placeholder {
+            color: #aaaaaa;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+        }
+
+        .contact-right input:focus,
+        .contact-right textarea:focus { border-bottom-color: #000; }
+
+        .contact-right textarea { resize: vertical; }
+
+        .btn-send {
+            width: 100%;
+            padding: 20px;
+            background-color: #000000;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+        }
+
+        .btn-send:hover { background-color: #333333; transform: translateY(-2px); }
+
+        @media (max-width: 900px) {
+            .contact-layout { grid-template-columns: 1fr; gap: 60px; }
+            .contact-slogan { margin-bottom: 40px; }
+        }
+
+        /* ══ LOCATION SECTION ══ */
+        .location-section {
+            background-color: #f4f4f4;
+            padding: 100px 20px;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            color: #1a1a1a;
+        }
+
+        .location-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .location-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #000;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .loc-card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .loc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            color: #219cca;
+            margin-bottom: 20px;
+        }
+
+        .loc-card h3 {
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-text {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+            font-weight: 400;
+        }
+
+        .card-note {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: auto;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #000;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif; /* Updated Font */
+        }
+
+        .social-links a:hover { background: #000; color: #fff; }
+
+        .map-wrapper {
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            background-color: #ddd;
+        }
+
+        @media (max-width: 900px) {
+            .location-grid { grid-template-columns: 1fr; gap: 20px; }
+            .loc-card {
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+                padding: 25px;
+            }
+            .card-icon { margin-bottom: 0; }
+            .loc-card:last-child { flex-direction: column; align-items: flex-start; }
+        }
+
+        @media (max-width: 600px) {
+            .loc-card { flex-direction: column; align-items: flex-start; }
+            .map-wrapper { height: 300px; }
+        }
+ /* ══ FOOTER ══ */
+  .site-footer { background: #0f1014; color: #ffffff; padding: 80px 0 30px; font-family: 'Montserrat', sans-serif; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1fr; gap: 40px; }
+  .footer-brand { padding-right: 20px; }
+  .footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+  .s-logo { width: auto; height: 50px; border-radius: 0; display: block; object-fit: contain; }
+  .footer-desc { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.6; color: #888; max-width: 250px; }
+  .site-footer h5 { color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+  .footer-links { list-style: none; padding: 0; margin: 0; }
+  .footer-links li { margin-bottom: 14px; }
+  .footer-links a { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; text-decoration: none; transition: color 0.3s ease, padding-left 0.3s ease; }
+  .footer-links a:hover { color: #fff; padding-left: 5px; }
+  .contact-item { margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; }
+  .contact-icon { margin-top: 3px; color: #555; }
+  .contact-text { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.5; }
+  .contact-text strong { display: block; color: #fff; margin-bottom: 4px; font-weight: 700; }
+  .social-grid { display: flex; gap: 15px; margin-top: 10px; }
+  .social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: all 0.3s ease; }
+  .social-link:hover { background: #fff; color: #0f1014; transform: translateY(-3px); }
+  .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+  .footer-bottom { margin-top: 70px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #666; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .about-grid { grid-template-columns:1fr; }
+}
+@media (max-width:768px) {
+  .ticker__item { font-size:36px; }
+  :root { --tick-h:56px; }
+  .carousel-slide { flex:0 0 100%; }
+  .carousel-btn.prev { left:10px; }
+  .carousel-btn.next { right:10px; }
+  .dark-bar { flex-direction:column; gap:16px; text-align:center; }
+  .hero { align-items:center; text-align:center; }
+  .hero-content { margin:0 auto; padding-top:20px; }
+  header { padding: 16px 24px; }
+  .offcanvas { grid-template-columns: 1fr; }
+  .oc-right { display: none; }
+  .oc-left { padding: 32px 28px; }
+  .footer-container { grid-template-columns: 1fr 1fr; padding: 0 28px; }
+  .footer-brand { grid-column: span 2; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; padding: 24px 28px; }
+}
+@media (max-width:480px) {
+  .footer-container { grid-template-columns: 1fr; }
+  .footer-brand { grid-column: span 1; }
+}
+
+    </style>
+</head>
+<body>
+
+
+<!-- ══ OFFCANVAS ══ -->
+<div class="offcanvas" id="offcanvas">
+  <div class="oc-left">
+    <div class="oc-top-row">
+      <span class="oc-logo-text">BLOSSOM</span>
+      <button class="oc-close" onclick="toggleMenu()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Close
+      </button>
+    </div>
+    <ul class="oc-nav">
+      <li><a href="index">Home</a></li>
+      <li><a href="about">About</a></li>
+      <li class="has-sub">
+        <a href="#">Services</a>
+        <ul class="oc-submenu">
+          <li><a href="shooting-floor">Shooting Floor</a></li>
+          <li><a href="video-editing">Video Editing</a></li>
+          <li><a href="video-production">Video Production</a></li>
+        </ul>
+      </li>
+      <li><a href="contact-us">Contact</a></li>
+    </ul>
+  </div>
+  <div class="oc-right">
+    <div class="oc-right-top">
+      <button class="oc-close-right" onclick="toggleMenu()" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <p class="oc-get-title">Get in Touch</p>
+    <div class="oc-info-block"><span class="oc-info-label">Email</span><div class="oc-info-val"><a href="mailto:info@blossomit.company">info@blossomit.company</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Phone</span><div class="oc-info-val"><a href="tel:+91 99469 99460">+91 9946999460</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Location</span><div class="oc-info-val">1st Floor, Dune Centre, 7/359/34,T.K Krishnan Rd, Kunnamkulam, Kerala 680503</div></div>
+    <div class="oc-info-block">
+      <span class="oc-info-label">Follow Us</span>
+      <div class="oc-socials">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="oc-soc">Ig</a>
+        <a href="https://www.youtube.com/@blossomads" aria-label="YouTube" class="oc-soc">Yt</a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="oc-soc">Fb</a>
+        <a href="https://api.whatsapp.com/send/?phone=919946099469&text&type=phone_number&app_absent=0" aria-label="WhatsApp" class="oc-soc">Wa</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <a href="index" class="hdr-logo" aria-label="Blossom Home">
+    <img src="images/blossom-logo.jpg" alt="Blossom Logo" style="height: 100%; width: auto; display: block;">
+  </a>
+  <button class="hdr-ham" onclick="toggleMenu()" aria-label="Open Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero-layout">
+      <div class="layout-overlay"></div>
+        <main>
+            <div class="main-headline">
+                <h1>WHAT BRANDS NEED
+<br><span>IS DELIVERED HERE</span></h1>
+            </div>
+        </main>
+    </section>
+
+    <!-- ══ GET IN TOUCH SECTION ══ -->
+    <section class="get-in-touch-section">
+        <div class="contact-layout">
+            
+            <div class="contact-left">
+                <h2>GET IN TOUCH</h2>
+                <p class="contact-slogan">Let's code our connection better. Drop your queries and suggestions here.</p>
+                
+                <div class="info-list">
+                    <div class="info-item">
+                        <span class="info-label">PHONE</span>
+                        <span class="info-text" >+91 9946099469</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">ADDRESS</span>
+                        <span class="info-text">1st Floor, Dune Centre, 7/359/34, T.K Krishnan Rd, Kunnamkulam, Kerala-680503</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">EMAIL</span>
+                        <a href="mailto:info@blossomit.company" class="info-text link">info@blossomit.company@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-right">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Your Phone" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="4" placeholder="Write Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn-send">Send Message</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LOCATION SECTION ══ -->
+    <section class="location-section">
+        <div class="location-container">
+            
+            <h2 class="location-title">Where to Find Us</h2>
+
+            <div class="location-grid">
+                
+                <div class="loc-card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <h3>Studio HQ</h3>
+                    <p class="card-text">1st Floor, Dune Centre, 7/359/34,<br>T.K Krishnan Rd, Kunnamkulam, Kerala 680503</p>
+                    <span class="card-note">Appointment Only</span>
+                </div>
+
+                <div class="loc-card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <h3>Remote Teams</h3>
+                    <p class="card-text">Serving clients in<br>12+ time zones globally.</p>
+                    <span class="card-note">EST to IST (GMT+5:30)</span>
+                </div>
+
+                <div class="loc-card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </div>
+                    <h3>Connect</h3>
+                    <p class="card-text">Follow our updates and latest projects on social media.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/blossom.ads.media" aria-label="Facebook">Fb</a>
+                        <a href="https://www.instagram.com/blossomshootingfloor" aria-label="Instagram">Ig</a>
+                        <a href="https://www.youtube.com/@blossomads" aria-label="YouTube">Yt</a>
+                        <a href="https://api.whatsapp.com/send/?phone=919946099469&text&type=phone_number&app_absent=0" aria-label="WhatsApp">Wa</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3921.0725539393125!2d76.06474101112761!3d10.651471600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7956051836419%3A0x80b5506390cedefc!2sBlossom%20Advertising%2C%20Media%20and%20Studio%20Floor!5e0!3m2!1sen!2sin!4v1776709258062!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="footer-logo-text">
+        <img src="images/blossom-logo.jpg" alt="Blossom Logo" class="s-logo">
+        BLOSSOM
+      </div>
+      <p class="footer-desc">Building sustainable brands through creative video production, expert editing, and compelling storytelling. Kerala's trusted production partner.</p>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Our Services</h5>
+      <ul class="footer-links">
+        <li><a href="shooting-floor">Shooting Floor</a></li>
+        <li><a href="video-editing">Video Editing</a></li>
+        <li><a href="video-production">Video Production</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Policies</h5>
+      <ul class="footer-links">
+        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund &amp; Cancellation</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Locate Us</h5>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div class="contact-text">
+          <strong>Head Office</strong>
+          Blossom Advertising Media and Studio Floor Kerala, India
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div class="contact-text"><a href="tel:+91 9946999460" style="color:inherit;text-decoration:none;">+91 99469 99460</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-text"><a href="mailto:info@blossomit.company" style="color:inherit;text-decoration:none;">info@blossomit.company</a></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Connect With Us</h5>
+      <div class="social-grid">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@blossomads" class="social-link" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-2.47 12.35 12.35 0 00-7.64 0A4.83 4.83 0 014.41 6.69 44.37 44.37 0 002 12a44.37 44.37 0 002.41 5.31 4.83 4.83 0 003.77 2.47 12.35 12.35 0 007.64 0 4.83 4.83 0 003.77-2.47A44.37 44.37 0 0022 12a44.37 44.37 0 00-2.41-5.31zM10 15V9l5 3-5 3z"/></svg>
+        </a>
+        <a href="https://wa.me/919946099469" class="social-link" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container" style="padding-top:0;">
+    <div class="footer-bottom" style="width:100%;grid-column:1/-1;">
+      <span>© 2026 Blossom Ads &amp; Media. All rights reserved.</span>
+      <span>Designed with ❤️ by Blossom Team</span>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- ══ JAVASCRIPT ══ -->
+    <script>
+        function toggleMenu() {
+            const offcanvas = document.getElementById('offcanvas');
+            const body = document.body;
+            offcanvas.classList.toggle('open');
+            body.style.overflow = offcanvas.classList.contains('open') ? 'hidden' : 'auto';
+        }
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('hdr');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

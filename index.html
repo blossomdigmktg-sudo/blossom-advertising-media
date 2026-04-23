@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blossom — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  /* ── GLOBAL ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', sans-serif; background: #f8f8f9; overflow-x: hidden; }
+
+  /* ══ HEADING HIERARCHY ══ */
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(48px, 7.5vw, 68px);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: #f8f8f9;
+    font-weight: 700;
+  }
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5.5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #000000;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(18px, 2.2vw, 30px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #111111;
+  }
+  h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(13px, 1.1vw, 15px);
+    letter-spacing: 0.05em;
+    color: #727272;
+    margin-bottom: 14px;
+  }
+  h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  /* ══ OFFCANVAS ══ */
+  .offcanvas {
+    position: fixed; inset: 0; z-index: 999;
+    display: grid; grid-template-columns: 1fr 1fr;
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+  }
+  .offcanvas.open { transform: translateX(0); }
+  .oc-left {
+    background: #f8f8f9; padding: 40px 48px;
+    display: flex; flex-direction: column; gap: 48px;
+    border-right: 1px solid #e0e0e0;
+  }
+  .oc-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: .08em; color: #1a1a2e; }
+  .oc-top-row { display: flex; align-items: center; justify-content: space-between; }
+  .oc-close {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Montserrat', sans-serif; font-size: .8rem;
+    font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #111; background: none; cursor: pointer;
+    padding: 8px 16px; border: 1px solid #ccc; border-radius: 100px; transition: all .25s;
+  }
+  .oc-close:hover { background: #111; color: #fff; border-color: #111; }
+  .oc-nav { list-style: none; display: flex; flex-direction: column; }
+  .oc-nav > li { border-bottom: 1px solid #e8e8e8; overflow: visible; }
+  .oc-nav > li > a {
+    display: block; padding: 20px 0;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: clamp(22px, 3vw, 36px); color: #111;
+    text-decoration: none; letter-spacing: -.01em;
+    transition: color .2s, padding-left .2s; position: relative;
+  }
+  .oc-nav > li > a::after { content: '→'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: .9rem; color: #ccc; transition: color .2s; }
+  .oc-nav > li > a:hover { color: #219cca; padding-left: 8px; }
+  .oc-nav > li > a:hover::after { color: #219cca; }
+  .oc-submenu { list-style: none; padding: 0 0 12px 16px; display: none; }
+  .oc-nav li.has-sub:hover .oc-submenu { display: block; }
+  .oc-submenu li a {
+    display: block; padding: 6px 0; font-family: 'Montserrat', sans-serif;
+    font-size: .88rem; color: #555; text-decoration: none; transition: color .2s;
+  }
+  .oc-submenu li a:hover { color: #219cca; }
+  .oc-right { background: #000000; padding: 40px 48px; display: flex; flex-direction: column; }
+  .oc-right-top { display: flex; justify-content: flex-end; margin-bottom: 60px; }
+  .oc-close-right {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2); background: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .25s; color: #fff;
+  }
+  .oc-close-right:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.5); }
+  .oc-get-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; color: #fff; margin-bottom: 36px; }
+  .oc-info-block { margin-bottom: 28px; }
+  .oc-info-val { font-family: 'Montserrat', sans-serif; font-size: .95rem; color: rgba(255,255,255,.85); line-height: 1.7; }
+  .oc-info-val a { color: rgba(255,255,255,.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.2); transition: border-color .2s, color .2s; }
+  .oc-info-val a:hover { color: #219cca; border-color: #219cca; }
+  .oc-socials { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .oc-soc {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.7); font-family: 'Montserrat', sans-serif;
+    font-size: .78rem; font-weight: 700;
+    text-decoration: none; transition: all .25s;
+  }
+  .oc-soc:hover { background: linear-gradient(135deg,#00A0C0,#20C0D0,#4080C0,#6060A0); border-color: transparent; color: #fff; }
+
+  /* ══ HEADER ══ */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px; display: flex; align-items: center; justify-content: space-between;
+    transition: background .4s, box-shadow .4s;
+  }
+  header.scrolled { background: rgba(248,248,249,.96); box-shadow: 0 1px 0 rgba(0,0,0,.06); backdrop-filter: blur(10px); }
+  .hdr-logo {
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem;
+    letter-spacing: .1em; background: transparent; color: #fff;
+    width: auto; height: 50px; border-radius: 0; border: none;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: all .3s;
+  }
+  .hdr-ham {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.4);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 5px; background: none; cursor: pointer; transition: all .3s;
+  }
+  header.scrolled .hdr-ham { border-color: rgba(0,0,0,.2); }
+  .hdr-ham span { display: block; width: 18px; height: 1.5px; background: #fff; transition: background .3s; }
+  header.scrolled .hdr-ham span { background: #1a1a2e; }
+  .hdr-ham:hover { background: rgba(255,255,255,.1); }
+
+  /* ══ HERO ══ */
+  .hero {
+    min-height: 100vh;
+    background: #000000;
+    padding: 120px 48px 0; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(33,156,202,.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 50% at 20% 80%, rgba(93,113,175,.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-top-row { display: grid; grid-template-columns: 3fr 1fr; gap: 24px; position: relative; z-index: 2; }
+  .hero-video {
+    border-radius: 16px; overflow: hidden; position: relative;
+    padding-bottom: 56.25%; background: #0a0a18;
+    box-shadow: 0 24px 60px rgba(0,0,0,.5);
+  }
+  .video-cover-wrapper {
+    position: absolute; inset: 0; display: block;
+    text-decoration: none; border-radius: 16px; overflow: hidden; z-index: 5;
+  }
+  .video-thumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .video-cover-wrapper:hover .video-thumb { transform: scale(1.05); }
+  .play-button {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 70px; height: 48px; background: rgba(255, 0, 0, 0.9);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
+  }
+  .video-cover-wrapper:hover .play-button { transform: translate(-50%, -50%) scale(1.1); background: #ff0000; }
+  .play-icon { width: 0; height: 0; border-style: solid; border-width: 10px 0 10px 20px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
+  .hero-services { display: flex; flex-direction: column; justify-content: center; padding-left: 20px; }
+  .hero-services ul { list-style: none; margin-bottom: 50px; }
+  .hero-services ul li { border-bottom: 1px solid rgba(255,255,255,.1); }
+  .hero-services ul li a {
+    display: block; padding: 18px 0;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: clamp(14px, 1.6vw, 20px); color: #727272;
+    text-decoration: none; letter-spacing: .02em;
+    transition: color .2s, padding-left .2s; position: relative;
+  }
+  .hero-services ul li a::after { content: '↗'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: .8rem; color: rgba(255,255,255,.2); transition: color .2s; }
+  .hero-services ul li a:hover { color: #219cca; padding-left: 6px; }
+  .hero-services ul li a:hover::after { color: #219cca; }
+  .hero-bottom { display: grid; grid-template-columns: 1fr 2.5fr; align-items: flex-end; gap: 40px; margin-top: auto; padding-bottom: 50px; position: relative; z-index: 2; }
+  .hero-tagline { display: flex; flex-direction: column; gap: 24px; }
+  .hero-btn {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    background: #111; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 20px 36px;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.12);
+    transition: background 0.25s, border-color 0.25s; cursor: pointer; align-self: flex-start;
+  }
+  .hero-btn:hover { background: #727272; color: #fff; }
+  .bf-hero-scrolling-words { overflow: hidden; width: 100%; position: relative; }
+  .bf-hero-scrolling-words ul {
+    display: flex; list-style: none; white-space: nowrap;
+    width: max-content; animation: marquee-scroll 22s linear infinite;
+    gap: 0; align-items: flex-end; margin-bottom: -5px;
+  }
+  .bf-hero-scrolling-words ul:hover { animation-play-state: paused; }
+  .bf-hero-scrolling-words ul li { font-family: 'Montserrat', sans-serif; font-size: clamp(45px, 6.5vw, 65px); line-height: 0.88; letter-spacing: -0.01em; padding-right: 20px; display: flex; align-items: flex-end; }
+  .bf-hero-scrolling-words .word-solid { color: rgba(255,255,255,0.9); }
+  .bf-hero-scrolling-words .word-small { font-family: 'Montserrat', sans-serif; font-size: clamp(18px, 2.5vw, 26px); color: rgba(255,255,255,0.3); margin: 0 8px 4px; }
+  .bf-hero-scrolling-words .word-outline { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.25); }
+  @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ══ ABOUT ══ */
+  .bf-about-area { background: #eeeeee; padding: 100px 60px 120px; }
+  .bf-section-title {
+    margin-bottom: 70px; max-width: 1100px;
+    opacity: 0; transform: translateY(50px) scale(0.95);
+  }
+  .bf-about-area.in-view .bf-section-title { animation: popUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards; }
+  .bf-about-row { display: flex; gap: 60px; align-items: flex-start; }
+  .bf-about-left {
+    flex: 0 0 clamp(220px, 28vw, 380px); position: sticky; top: 80px;
+    display: flex; justify-content: center;
+    opacity: 0; transform: scale(0.6) translateY(40px);
+  }
+  .bf-about-area.in-view .bf-about-left { animation: popUpBounce 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; }
+
+  /* ══ UPDATED: Big Logo Image with Float Animation ══ */
+  .bnc-logo-img {
+    width: clamp(220px, 28vw, 380px);
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    animation: floatCircle 6s ease-in-out infinite;
+    filter: drop-shadow(0 30px 50px rgba(0,0,0,0.25));
+    object-fit: contain;
+    transition: filter 0.4s ease;
+  }
+  .bnc-logo-img:hover {
+    filter: drop-shadow(0 40px 70px rgba(0,0,0,0.35));
+  }
+
+  .bf-about-right-col { flex: 1; display: flex; flex-direction: column; gap: 30px; }
+  .bf-about-right { opacity: 0; transform: translateY(90px); transition: opacity 0.75s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bf-about-right.visible { opacity: 1; transform: translateY(0); }
+  .bf-content-card {
+    background: #fff; border-radius: 24px; padding: 40px 40px 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08); overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .bf-content-card:hover { transform: translateY(-6px); box-shadow: 0 40px 80px rgba(0,0,0,0.13); }
+  .bf-card-desc { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.75; color: #555; margin-bottom: 24px; }
+  .bf-card-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; color: #727272; text-decoration: none; letter-spacing: 0.02em; margin-bottom: 30px; transition: gap 0.3s ease; }
+  .bf-card-link:hover { gap: 14px; }
+  .bf-card-image { width: 100%; height: 300px; border-radius: 16px 16px 0 0; overflow: hidden; position: relative; margin-top: 10px; background: linear-gradient(135deg, #1a1a2e, #219cca22); }
+  .bf-card-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.6s ease; }
+  .bf-content-card:hover .bf-card-image img { transform: scale(1.05); }
+  .bf-card-image::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to top, rgba(0,0,0,0.25), transparent); pointer-events: none; }
+
+  @keyframes popUp { 0% { opacity: 0; transform: translateY(50px) scale(0.95); } 60% { opacity: 1; transform: translateY(-8px) scale(1.01); } 80% { transform: translateY(3px) scale(0.995); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes popUpBounce { 0% { opacity: 0; transform: scale(0.6) translateY(40px); } 60% { opacity: 1; transform: scale(1.06) translateY(-8px); } 80% { transform: scale(0.97) translateY(3px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+  @keyframes floatCircle { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-18px); } }
+
+  /* ══ RECENT WORK ══ */
+  .rw-section { background: #0d0d0d; padding: 100px 0 0; overflow: hidden; position: relative; }
+  .rw-header { padding: 0 60px; margin-bottom: 50px; }
+  .rw-section h2 { color: #fff; transform: translateY(110%); opacity: 0; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease; }
+  .rw-section.in-view h2 { transform: translateY(0); opacity: 1; }
+  .rw-marquee-wrapper { -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); padding-bottom: 100px; }
+  .rw-marquee-track { display: flex; gap: 24px; width: max-content; animation: rw-marquee 60s linear infinite; }
+  .rw-marquee-track:hover { animation-play-state: paused; }
+  @keyframes rw-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .rw-card { position: relative; width: 340px; height: 480px; border-radius: 16px; overflow: hidden; flex-shrink: 0; background: #111; text-decoration: none; display: block; }
+  .rw-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .rw-card:hover .rw-thumb { transform: scale(1.06); }
+  .rw-play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 3; transition: all 0.4s ease; }
+  .rw-play-icon svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+  .rw-card:hover .rw-play-icon { background: rgba(255,255,255,0.25); transform: translate(-50%, -50%) scale(1.1); }
+  .rw-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.05) 50%, transparent 100%); pointer-events: none; z-index: 1; }
+  .rw-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 28px; z-index: 2; }
+  .rw-card-tag { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #219cca; margin-bottom: 10px; transform: translateY(6px); opacity: 0.7; transition: all 0.4s ease; }
+  .rw-card:hover .rw-card-tag { opacity: 1; transform: translateY(0); }
+  .rw-card h3 { color: #fff; font-size: 26px; transform: translateY(8px); opacity: 0.8; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s; letter-spacing: -0.02em; }
+  .rw-card:hover h3 { transform: translateY(0); opacity: 1; }
+  .rw-card-sub { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #999; margin-top: 6px; transform: translateY(8px); opacity: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s; }
+  .rw-card:hover .rw-card-sub { transform: translateY(0); opacity: 1; }
+
+  /* ══ YOUR WAY ══ */
+  .yw-section { background: #FFFFFF; padding: 80px 60px 0; color: #111; overflow: hidden; }
+  .yw-header { margin-bottom: 60px; }
+  .yw-section h2 { color: #111; margin-bottom: 20px; overflow: hidden; }
+  .yw-section h2 .line-inner { display: block; transform: translateY(110%); opacity: 0; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease; }
+  .yw-p { font-family: 'Montserrat', sans-serif; font-size: clamp(16px, 1.5vw, 16px); font-weight: 400; color: #555; line-height: 1.7; opacity: 0; transform: translateY(8px); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s; }
+  .yw-section.in-view h2 .line-inner { transform: translateY(0); opacity: 1; transition-delay: 0.1s; }
+  .yw-section.in-view .yw-header p { opacity: 1; transform: translateY(0); }
+  .yw-border-line { width: 0%; height: 1px; background: rgba(0,0,0,0.1); transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s; }
+  .yw-section.in-view .yw-border-line { width: 100%; }
+  .yw-cards { display: grid; grid-template-columns: repeat(4, 1fr) 1.5fr; gap: 0; }
+  .yw-card { border-right: 1px solid rgba(0,0,0,0.08); padding: 40px 30px 50px; display: flex; flex-direction: column; justify-content: space-between; min-height: 340px; position: relative; overflow: hidden; opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease; }
+  .yw-card:nth-child(1) { transition-delay: 0.2s; }
+  .yw-card:nth-child(2) { transition-delay: 0.35s; }
+  .yw-card:nth-child(3) { transition-delay: 0.5s; }
+  .yw-card:nth-child(4) { transition-delay: 0.65s; }
+  .yw-section.in-view .yw-card { opacity: 1; transform: translateY(0); }
+  .yw-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(33,156,202,0.4), transparent); transition: left 0.5s ease; }
+  .yw-card:hover::after { left: 100%; }
+  .yw-card:hover { background: #cfe6f0; }
+  .yw-card-num { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #555; letter-spacing: 0.05em; transition: color 0.3s ease; }
+  .yw-card:hover .yw-card-num { color: rgba(0,0,0,0); }
+  .yw-card-bottom { margin-top: 60px; }
+  .yw-card-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(30px, 3.5vw, 52px); color: #111; line-height: 1; margin-bottom: 16px; letter-spacing: -0.02em; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease; }
+  .yw-card:hover .yw-card-title { transform: translateX(6px); color: #101d36; }
+  .yw-card-desc { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #555; line-height: 1.6; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease 0.1s; }
+  .yw-card:hover .yw-card-desc { max-height: 80px; opacity: 1; }
+  .yw-cta { background: #F0F4F8; padding: 40px 36px 50px; display: flex; flex-direction: column; justify-content: space-between; min-height: 340px; position: relative; overflow: hidden; opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease 0.75s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s; }
+  .yw-section.in-view .yw-cta { opacity: 1; transform: translateX(0); }
+  .yw-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 80%, rgba(33,156,202,0.3) 0%, transparent 60%); animation: pulse-bg-light 4s ease-in-out infinite; }
+  @keyframes pulse-bg-light { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
+  .yw-cta-content { position: relative; z-index: 1; }
+  .yw-cta h3 { color: #111; font-size: clamp(28px, 3vw, 46px); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .yw-cta-desc { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #555; line-height: 1.6; margin-bottom: 40px; }
+  .yw-cta-btn { display: inline-flex; align-items: center; justify-content: space-between; background: #111; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 20px 36px; text-decoration: none; width: 100%; max-width: 240px; position: relative; overflow: hidden; transition: color 0.3s ease; z-index: 1; }
+  .yw-cta-btn::before { content: ''; position: absolute; inset: 0; background: #727272; transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1; }
+  .yw-cta-btn:hover::before { transform: scaleX(1); }
+  .yw-cta-btn:hover { color: #fff; }
+  .btn-corner { position: absolute; width: 8px; height: 8px; border-color: rgba(255,255,255,0.3); border-style: solid; transition: border-color 0.3s; }
+  .yw-cta-btn:hover .btn-corner { border-color: rgba(255,255,255,0.6); }
+  .btn-corner.tl { top: -1px; left: -1px; border-width: 1.5px 0 0 1.5px; }
+  .btn-corner.br { bottom: -1px; right: -1px; border-width: 0 1.5px 1.5px 0; }
+  .btn-arrow { font-size: 16px; line-height: 1; transition: transform 0.3s ease; }
+  .yw-cta-btn:hover .btn-arrow { transform: translate(3px, -3px); }
+  .num-val { display: inline-block; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease; }
+  .yw-card:hover .num-val { transform: scale(1.2); color: #219cca; }
+
+  /* ══ MARQUEE SECTION ══ */
+  .marquee-section { width: 100%; padding: 40px 0; overflow: hidden; display: flex; flex-direction: column; gap: 0; }
+  .marquee-row { width: 100%; overflow: hidden; white-space: nowrap; padding: 6px 0; }
+  .marquee-track { display: inline-flex; align-items: baseline; gap: 0; white-space: nowrap; }
+  .row-ghost .marquee-track { animation: scrollLeft 30s linear infinite; }
+  .row-bold .marquee-track { animation: scrollRight 22s linear infinite; }
+  .ghost-word { font-family: 'Montserrat', sans-serif; font-size: clamp(52px, 7vw, 110px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; color: #727272; padding-right: clamp(30px, 4vw, 70px); line-height: 1; user-select: none; }
+  .bold-word { font-family: 'Montserrat', sans-serif; font-size: clamp(60px, 9vw, 140px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; color: #111111; padding-right: clamp(30px, 5vw, 80px); line-height: 1; user-select: none; }
+  .dot { display: inline-block; width: clamp(8px, 1vw, 14px); height: clamp(8px, 1vw, 14px); border-radius: 50%; background: #111; margin-right: clamp(30px, 5vw, 80px); margin-bottom: 6px; flex-shrink: 0; }
+  .dot-ghost { background: #c8c8c8; width: clamp(6px, 0.8vw, 10px); height: clamp(6px, 0.8vw, 10px); border-radius: 50%; display: inline-block; margin-right: clamp(30px, 4vw, 70px); margin-bottom: 4px; flex-shrink: 0; }
+  @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+  .marquee-row:hover .marquee-track { animation-play-state: paused; }
+
+  /* ══ WORKFLOW / GLOBE ══ */
+  .workflow-section { position: relative; min-height: 520px; background: #000000; display: flex; align-items: center; overflow: hidden; padding: 80px 40px; }
+  .globe-wrap { position: absolute; right: -6%; top: 50%; transform: translateY(-50%); width: clamp(380px, 55vw, 820px); height: clamp(380px, 55vw, 820px); pointer-events: none; opacity: 0; animation: fadeIn 1.4s ease 0.4s forwards; }
+  .globe-wrap svg { width: 100%; height: 100%; }
+  .globe-arcs { transform-origin: 50% 50%; animation: globeSpin 28s linear infinite; }
+  @keyframes globeSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .pulse-dot { animation: pulseDot 2.5s ease-in-out infinite; }
+  .pulse-dot2 { animation: pulseDot 2.5s ease-in-out 0.8s infinite; }
+  .pulse-dot3 { animation: pulseDot 2.5s ease-in-out 1.5s infinite; }
+  @keyframes pulseDot { 0%,100% { opacity: 0.6; r: 4; } 50% { opacity: 1; r: 7; } }
+  .wf-content { position: relative; z-index: 10; max-width: 520px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s ease 0.2s forwards; }
+  .workflow-section h2 { color: #ffffff; margin-bottom: 28px; }
+  .wf-desc { font-family: 'Montserrat', sans-serif; font-size: clamp(13px, 1.2vw, 16px); font-weight: 400; line-height: 1.85; color: #ffffff; margin-bottom: 44px; max-width: 440px; }
+  .btn-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .btn-dark { position: relative; display: inline-flex; align-items: center; justify-content: center; background: #0a1325; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 20px 36px; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); transition: background 0.25s, border-color 0.25s; cursor: pointer; }
+  .btn-dark:hover { background: #727272; border-color: rgba(255,255,255,0.3); }
+  .btn-dark::before, .btn-dark::after { content: ''; position: absolute; width: 8px; height: 8px; border-color: rgba(255,255,255,0.5); border-style: solid; }
+  .btn-dark::before { top: -1px; left: -1px; border-width: 1.5px 0 0 1.5px; }
+  .btn-dark::after { bottom: -1px; right: -1px; border-width: 0 1.5px 1.5px 0; }
+  .btn-outline { display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 20px 36px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); transition: background 0.25s, border-color 0.25s, color 0.25s; cursor: pointer; }
+  .btn-outline:hover { background: #727272; border-color: rgba(255,255,255,0.7); }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ══ FOOTER ══ */
+  .site-footer { background: #0f1014; color: #ffffff; padding: 80px 0 30px; font-family: 'Montserrat', sans-serif; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1fr; gap: 40px; }
+  .footer-brand { padding-right: 20px; }
+  .footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+  .s-logo { width: auto; height: 50px; border-radius: 0; display: block; object-fit: contain; }
+  .footer-desc { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.6; color: #888; max-width: 250px; }
+  .site-footer h5 { color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+  .footer-links { list-style: none; padding: 0; margin: 0; }
+  .footer-links li { margin-bottom: 14px; }
+  .footer-links a { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; text-decoration: none; transition: color 0.3s ease, padding-left 0.3s ease; }
+  .footer-links a:hover { color: #fff; padding-left: 5px; }
+  .contact-item { margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; }
+  .contact-icon { margin-top: 3px; color: #555; }
+  .contact-text { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.5; }
+  .contact-text strong { display: block; color: #fff; margin-bottom: 4px; font-weight: 700; }
+  .social-grid { display: flex; gap: 15px; margin-top: 10px; }
+  .social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: all 0.3s ease; }
+  .social-link:hover { background: #fff; color: #0f1014; transform: translateY(-3px); }
+  .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+  .footer-bottom { margin-top: 70px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #666; }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 1024px) {
+    .yw-cards { grid-template-columns: repeat(2, 1fr); }
+    .yw-cta { grid-column: span 2; }
+    .footer-container { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: span 2; margin-bottom: 20px; }
+  }
+  @media (max-width: 768px) {
+    header { padding: 16px 24px; }
+    .hdr-logo { height: 40px; }
+    .hero { padding: 100px 24px 0; }
+    .hero-top-row { grid-template-columns: 1fr; }
+    .hero-services { padding-left: 0; margin-top: 24px; }
+    .hero-bottom { grid-template-columns: 1fr; gap: 24px; }
+    .offcanvas { grid-template-columns: 1fr; }
+    .oc-right { display: none; }
+    .bf-about-area { padding: 60px 24px 80px; }
+    .bf-content-card { padding: 28px 24px 0; }
+    .bf-card-image { height: 200px; }
+    .yw-section { padding: 60px 24px 0; }
+    .rw-header { padding: 0 24px; }
+    .rw-card { width: 280px; height: 400px; }
+    .rw-card h3 { opacity: 1; transform: translateY(0); font-size: 22px; }
+    .rw-card-tag, .rw-card-sub { opacity: 1; transform: translateY(0); }
+    .workflow-section { padding: 60px 24px 340px; min-height: auto; }
+    .globe-wrap { top: auto; bottom: -60px; right: 50%; transform: translateX(50%); width: 340px; height: 340px; }
+    .btn-row { flex-direction: column; align-items: flex-start; }
+    .footer-container { padding: 0 24px; grid-template-columns: 1fr; }
+    .footer-brand { grid-column: span 1; }
+    .footer-bottom { flex-direction: column; gap: 10px; }
+    .s-logo { height: 40px; }
+    .bnc-logo-img { width: clamp(180px, 60vw, 280px); }
+  }
+  @media (max-width: 600px) {
+    .yw-cards { grid-template-columns: 1fr; }
+    .yw-card { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.06); min-height: auto; }
+    .yw-cta { grid-column: span 1; }
+    .bf-about-row { flex-direction: column; }
+    .bf-about-left { position: static; flex: none; width: 100%; }
+    .bnc-logo-img { width: clamp(180px, 70vw, 260px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ OFFCANVAS ══ -->
+<div class="offcanvas" id="offcanvas">
+  <div class="oc-left">
+    <div class="oc-top-row">
+      <span class="oc-logo-text">BLOSSOM</span>
+      <button class="oc-close" onclick="toggleMenu()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Close
+      </button>
+    </div>
+    <ul class="oc-nav">
+      <li><a href="#">Home</a></li>
+      <li><a href="about">About</a></li>
+      <li class="has-sub">
+        <a href="#">Services</a>
+        <ul class="oc-submenu">
+          <li><a href="shooting-floor">Shooting Floor</a></li>
+          <li><a href="video-editing">Video Editing</a></li>
+          <li><a href="video-production">Video Production</a></li>
+        </ul>
+      </li>
+      <li><a href="contact-us">Contact</a></li>
+    </ul>
+  </div>
+  <div class="oc-right">
+    <div class="oc-right-top">
+      <button class="oc-close-right" onclick="toggleMenu()" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <p class="oc-get-title">Get in Touch</p>
+    <div class="oc-info-block"><span class="oc-info-label">Email</span><div class="oc-info-val"><a href="mailto:info@blossomit.company">info@blossomit.company</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Phone</span><div class="oc-info-val"><a href="tel:+91 99469 99460">+91 9946999460</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Location</span><div class="oc-info-val">1st Floor, Dune Centre, 7/359/34,T.K Krishnan Rd, Kunnamkulam, Kerala 680503</div></div>
+    <div class="oc-info-block">
+      <span class="oc-info-label">Follow Us</span>
+      <div class="oc-socials">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="oc-soc">Ig</a>
+        <a href="https://www.youtube.com/@blossomads" aria-label="YouTube" class="oc-soc">Yt</a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="oc-soc">Fb</a>
+        <a href="https://api.whatsapp.com/send/?phone=919946099469&text&type=phone_number&app_absent=0" aria-label="WhatsApp" class="oc-soc">Wa</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <a href="#" class="hdr-logo" aria-label="Blossom Home">
+    <img src="images/blossom-logo.jpg" alt="Blossom Logo" style="height: 100%; width: auto; display: block;">
+  </a>
+  <button class="hdr-ham" onclick="toggleMenu()" aria-label="Open Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-top-row">
+    <div class="hero-video">
+      <a href="https://youtube.com/shorts/HdRpSEOIVNA?si=hKSSjVHQIPm0H2jl" target="_blank" class="video-cover-wrapper">
+        <img src="https://img.youtube.com/vi/HdRpSEOIVNA/maxresdefault.jpg" alt="Blossom Hero Video" class="video-thumb">
+        <div class="play-button">
+          <div class="play-icon"></div>
+        </div>
+      </a>
+    </div>
+    <div class="hero-services">
+      <ul>
+        <li><a href="shooting-floor">Shooting Floor</a></li>
+        <li><a href="video-editing">Video Editing</a></li>
+        <li><a href="video-production">Video Production</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-tagline">
+      <h1>FROM FLOOR<br>TO FINAL FRAME</h1>
+      <a href="about" class="hero-btn">Discover Works</a>
+    </div>
+    <div class="bf-hero-scrolling-words">
+      <ul>
+        <li>
+          <span class="word-solid">BLOSSOM</span>
+          <span class="word-small">FOR</span>
+          <span class="word-outline">FILM PRODUCTION &amp; POST-PRODUCTION</span>
+        </li>
+        <li>
+          <span class="word-solid">BLOSSOM</span>
+          <span class="word-small">FOR</span>
+          <span class="word-outline">FILM PRODUCTION &amp; POST-PRODUCTION</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="bf-about-area" id="bfAbout">
+  <h2 class="bf-section-title">We Don't Just Capture Moments,<br>But We Create Movement</h2>
+  <div class="bf-about-row">
+
+    <!-- ══ UPDATED: Image replaces the black oval circle ══ -->
+   <div class="bf-about-left">
+  <img
+    src="images/Blogo.png"
+    alt="Blossom Logo"
+    class="bnc-logo-img"
+  >
+</div>
+
+    <div class="bf-about-right-col">
+
+      <!-- Card 1 -->
+      <div class="bf-about-right" data-card="1">
+        <div class="bf-content-card">
+          <h4>Visual Storytelling</h4>
+          <h3>Your Story, Your Way: Bold,<br>Intentional, Pure, Vibrant</h3>
+          <p class="bf-card-desc">Blossom gives you full control of your brand narrative with advanced production, creative flexibility, and real-time collaboration — for consistent, vibrant results across every platform.</p>
+          <a href="#" class="bf-card-link">← Learn More</a>
+          <div class="bf-card-image">
+         <img src="images/blossom-shooting-floor.png" alt="Blossom Shooting Floor">
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bf-about-right" data-card="2">
+        <div class="bf-content-card">
+          <h4>Video Production</h4>
+          <h3>From Raw Footage<br>To Polished Films</h3>
+          <p class="bf-card-desc">Our production team brings cinematic quality to every project. From concept to camera, we handle every stage with precision and creative intent.</p>
+          <a href="#" class="bf-card-link">← Learn More</a>
+          <div class="bf-card-image">
+         <img src="images/video-production.png" alt="Video Production">
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bf-about-right" data-card="3">
+        <div class="bf-content-card">
+          <h4>Post Production</h4>
+          <h3>Every Frame Crafted<br>With Intention</h3>
+          <p class="bf-card-desc">Our editors and colour graders work tirelessly to transform raw footage into bold, distinctive brand stories that capture attention and leave a lasting impact.</p>
+          <a href="#" class="bf-card-link">← Learn More</a>
+          <div class="bf-card-image">
+           <img src="images/video-editing-blossom.png" alt="Video Editing Blossom">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ RECENT WORK ══ -->
+<section class="rw-section" id="rwSection">
+  <div class="rw-header">
+    <h2>Recent Work</h2>
+  </div>
+  <div class="rw-marquee-wrapper">
+    <div class="rw-marquee-track">
+
+      <a href="https://www.youtube.com/watch?v=FF3RuzG3iCA" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/FF3RuzG3iCA/maxresdefault.jpg" alt="Ethnic">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>Ethnic</h3>
+          <p class="rw-card-sub">by Raym</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=hBEx6aIzg20" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/hBEx6aIzg20/maxresdefault.jpg" alt="SYNAPSE Edu Hub">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>SYNAPSE &amp;<br>Edu Hub</h3>
+          <p class="rw-card-sub">with Vinit Dhaka</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=qK2AEH14PGs" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/qK2AEH14PGs/maxresdefault.jpg" alt="Corex Academy">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>Corex<br>Academy</h3>
+          <p class="rw-card-sub">with Behzad Kharas</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=-QWgQBmd14g" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/-QWgQBmd14g/maxresdefault.jpg" alt="Blossom">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>Blossom<br>Media Advertising</h3>
+          <p class="rw-card-sub">with Arjun Malhotra</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=f0uTXryc8nA" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/f0uTXryc8nA/maxresdefault.jpg" alt="The NextLevel">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>The NextLevel</h3>
+          <p class="rw-card-sub">with Priya Sharma</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=2SLyBPQ3ACI" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/2SLyBPQ3ACI/maxresdefault.jpg" alt="MINDSET Training Academy">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>MINDSET<br>Training Academy</h3>
+          <p class="rw-card-sub">with Vinit Dhaka</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=lz8FiYzXVx4" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/lz8FiYzXVx4/maxresdefault.jpg" alt="EYENIX">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>EYENIX<br>Eye Care</h3>
+          <p class="rw-card-sub">with Behzad Kharas</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=HdRpSEOIVNA" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/HdRpSEOIVNA/maxresdefault.jpg" alt="BLOSSOM">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>BLOSSOM<br>Media Advertising</h3>
+          <p class="rw-card-sub">with Arjun Malhotra</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=WEF8oYtb6JQ" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/WEF8oYtb6JQ/maxresdefault.jpg" alt="Urban Retreat">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>Urban<br>Retreat</h3>
+          <p class="rw-card-sub">with Priya Sharma</p>
+        </div>
+      </a>
+
+      <!-- Duplicate for seamless loop -->
+      <a href="https://www.youtube.com/watch?v=FF3RuzG3iCA" target="_blank" class="rw-card">
+        <img class="rw-thumb" src="https://img.youtube.com/vi/FF3RuzG3iCA/maxresdefault.jpg" alt="Ethnic">
+        <div class="rw-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="rw-card-overlay"></div>
+        <div class="rw-card-content">
+          <h3>Ethnic</h3>
+          <p class="rw-card-sub">by Raym</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ YOUR WAY ══ -->
+<section class="yw-section" id="ywSection">
+  <div class="yw-header">
+    <h2><span class="line-inner">Your Way to Work with Us</span></h2>
+    <p class="yw-p">Discover how Blossom can fit seamlessly into your production environment. Whether you're just getting started or looking to upgrade your workflow.</p>
+  </div>
+  <div class="yw-border-line"></div>
+  <div class="yw-cards">
+    <div class="yw-card">
+      <span class="yw-card-num"><span class="num-val">01</span></span>
+      <div class="yw-card-bottom">
+        <div class="yw-card-title">Say Hello</div>
+        <p class="yw-card-desc">Fill out a short form — we'll be in touch within one business day.</p>
+      </div>
+    </div>
+    <div class="yw-card">
+      <span class="yw-card-num"><span class="num-val">02</span></span>
+      <div class="yw-card-bottom">
+        <div class="yw-card-title">We Listen</div>
+        <p class="yw-card-desc">We take a look at your setup and understand your specific needs.</p>
+      </div>
+    </div>
+    <div class="yw-card">
+      <span class="yw-card-num"><span class="num-val">03</span></span>
+      <div class="yw-card-bottom">
+        <div class="yw-card-title">Let's Talk</div>
+        <p class="yw-card-desc">A quick call to walk through best solution for your workflow.</p>
+      </div>
+    </div>
+    <div class="yw-card">
+      <span class="yw-card-num"><span class="num-val">04</span></span>
+      <div class="yw-card-bottom">
+        <div class="yw-card-title">Try it Out</div>
+        <p class="yw-card-desc">Get hands-on with a personalized trial.</p>
+      </div>
+    </div>
+    <div class="yw-cta">
+      <div class="yw-cta-content">
+        <h3>Talk to an Expert</h3>
+        <p class="yw-cta-desc">Speak with one of our experts to find the perfect Blossom solution for your business.</p>
+      </div>
+      <a href="contact-us" class="yw-cta-btn">
+        <span class="btn-corner tl"></span>Book a Call<span class="btn-arrow">↗</span><span class="btn-corner br"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-section">
+  <div class="marquee-row row-ghost">
+    <div class="marquee-track">
+      <span class="ghost-word">SHOOTING FLOOR</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO PRODUCTION</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO EDITING</span><span class="dot-ghost"></span>
+      <span class="ghost-word">SHOOTING FLOOR</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO PRODUCTION</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO EDITING</span><span class="dot-ghost"></span>
+      <span class="ghost-word">SHOOTING FLOOR</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO PRODUCTION</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO EDITING</span><span class="dot-ghost"></span>
+      <span class="ghost-word">SHOOTING FLOOR</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO PRODUCTION</span><span class="dot-ghost"></span>
+      <span class="ghost-word">VIDEO EDITING</span><span class="dot-ghost"></span>
+    </div>
+  </div>
+  <div class="marquee-row row-bold">
+    <div class="marquee-track">
+      <span class="bold-word">SHOOTING FLOOR</span><span class="dot"></span>
+      <span class="bold-word">VIDEO EDITING</span><span class="dot"></span>
+      <span class="bold-word">VIDEO PRODUCTION</span><span class="dot"></span>
+      <span class="bold-word">SHOOTING FLOOR</span><span class="dot"></span>
+      <span class="bold-word">VIDEO EDITING</span><span class="dot"></span>
+      <span class="bold-word">VIDEO PRODUCTION</span><span class="dot"></span>
+      <span class="bold-word">SHOOTING FLOOR</span><span class="dot"></span>
+      <span class="bold-word">VIDEO EDITING</span><span class="dot"></span>
+      <span class="bold-word">VIDEO PRODUCTION</span><span class="dot"></span>
+      <span class="bold-word">SHOOTING FLOOR</span><span class="dot"></span>
+      <span class="bold-word">VIDEO EDITING</span><span class="dot"></span>
+      <span class="bold-word">VIDEO PRODUCTION</span><span class="dot"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GLOBE / WORKFLOW ══ -->
+<section class="workflow-section">
+  <div class="globe-wrap" aria-hidden="true">
+    <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="globeGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#2a4a8a" stop-opacity="0.35"/>
+          <stop offset="60%" stop-color="#1a3060" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#101d36" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="sphereGrad" cx="38%" cy="36%" r="56%">
+          <stop offset="0%" stop-color="#2a4070" stop-opacity="0.55"/>
+          <stop offset="50%" stop-color="#1a2d55" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#101d36" stop-opacity="0.1"/>
+        </radialGradient>
+        <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#aaccff" stop-opacity="0"/>
+          <stop offset="30%" stop-color="#aaccff" stop-opacity="0.6"/>
+          <stop offset="70%" stop-color="#ffffff" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#aaccff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="arcGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#88aaee" stop-opacity="0"/>
+          <stop offset="40%" stop-color="#88aaee" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="arcGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ccddff" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#ccddff" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2"/>
+        </linearGradient>
+        <filter id="arcGlow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="dotGlow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <clipPath id="sphereClip"><circle cx="350" cy="350" r="310"/></clipPath>
+      </defs>
+      <circle cx="350" cy="350" r="320" fill="url(#globeGlow)"/>
+      <circle cx="350" cy="350" r="310" fill="url(#sphereGrad)"/>
+      <circle cx="350" cy="350" r="310" fill="none" stroke="rgba(160,190,255,0.2)" stroke-width="1.5"/>
+      <g clip-path="url(#sphereClip)" opacity="0.18" stroke="rgba(180,210,255,0.7)" stroke-width="0.8" fill="none">
+        <ellipse cx="350" cy="350" rx="310" ry="50"/>
+        <ellipse cx="350" cy="350" rx="310" ry="120"/>
+        <ellipse cx="350" cy="350" rx="310" ry="200"/>
+        <ellipse cx="350" cy="350" rx="310" ry="270"/>
+        <ellipse cx="350" cy="350" rx="50" ry="310"/>
+        <ellipse cx="350" cy="350" rx="120" ry="310"/>
+        <ellipse cx="350" cy="350" rx="200" ry="310"/>
+        <ellipse cx="350" cy="350" rx="270" ry="310"/>
+        <ellipse cx="350" cy="350" rx="310" ry="8" stroke="rgba(180,210,255,0.4)" stroke-width="1.2"/>
+        <ellipse cx="350" cy="350" rx="8" ry="310" stroke="rgba(180,210,255,0.4)" stroke-width="1.2"/>
+      </g>
+      <g clip-path="url(#sphereClip)" fill="rgba(180,210,255,0.13)" stroke="rgba(200,225,255,0.3)" stroke-width="1">
+        <path d="M 200,180 C 210,160 240,155 260,165 C 280,175 290,200 285,225 C 280,250 265,270 250,280 C 235,290 215,285 205,265 C 195,245 190,210 200,180 Z"/>
+        <path d="M 340,170 C 355,160 375,162 385,175 C 395,188 390,205 380,215 C 370,225 355,225 345,215 C 335,205 330,188 340,170 Z"/>
+        <path d="M 390,155 C 420,145 480,148 510,165 C 540,182 555,210 548,240 C 541,270 515,288 488,290 C 461,292 435,278 420,255 C 405,232 395,205 390,180 Z"/>
+        <path d="M 340,250 C 352,238 368,240 376,255 C 384,270 382,300 372,320 C 362,340 345,348 333,338 C 321,328 318,305 322,282 C 326,259 332,260 340,250 Z"/>
+        <path d="M 220,295 C 232,282 248,284 256,298 C 264,312 262,340 252,360 C 242,380 225,386 215,374 C 205,362 202,338 206,315 C 210,295 212,305 220,295 Z"/>
+        <path d="M 490,330 C 504,320 522,324 528,338 C 534,352 528,372 516,378 C 504,384 488,378 482,364 C 476,350 478,338 490,330 Z"/>
+      </g>
+      <g class="globe-arcs" filter="url(#arcGlow)">
+        <path d="M 100,250 C 200,80 500,80 600,250" fill="none" stroke="url(#arcGrad1)" stroke-width="1.8" opacity="0.85"/>
+        <path d="M 80,380 C 220,180 480,200 620,380" fill="none" stroke="url(#arcGrad2)" stroke-width="1.4" opacity="0.7"/>
+        <path d="M 150,480 C 280,350 430,340 560,460" fill="none" stroke="url(#arcGrad3)" stroke-width="1.6" opacity="0.75"/>
+        <path d="M 240,160 C 320,110 420,115 490,175" fill="none" stroke="rgba(200,220,255,0.6)" stroke-width="1.2"/>
+        <path d="M 120,430 C 250,560 460,555 590,430" fill="none" stroke="rgba(180,210,255,0.5)" stroke-width="1.2"/>
+        <line x1="350" y1="200" x2="480" y2="310" stroke="rgba(200,220,255,0.4)" stroke-width="1"/>
+        <line x1="350" y1="200" x2="230" y2="290" stroke="rgba(200,220,255,0.4)" stroke-width="1"/>
+        <line x1="480" y1="310" x2="400" y2="420" stroke="rgba(200,220,255,0.35)" stroke-width="1"/>
+        <line x1="230" y1="290" x2="310" y2="400" stroke="rgba(200,220,255,0.35)" stroke-width="1"/>
+      </g>
+      <g filter="url(#dotGlow)">
+        <circle class="pulse-dot" cx="510" cy="195" r="5" fill="#ffffff"/>
+        <circle cx="510" cy="195" r="12" fill="rgba(255,255,255,0.15)"/>
+        <circle class="pulse-dot2" cx="215" cy="290" r="4" fill="#aaccff"/>
+        <circle cx="215" cy="290" r="9" fill="rgba(170,200,255,0.12)"/>
+        <circle class="pulse-dot3" cx="380" cy="440" r="4" fill="#ccdaff"/>
+        <circle cx="380" cy="440" r="9" fill="rgba(200,218,255,0.12)"/>
+        <circle cx="350" cy="200" r="3" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="470" cy="310" r="2.5" fill="rgba(200,220,255,0.8)"/>
+        <circle cx="290" cy="370" r="2" fill="rgba(180,210,255,0.7)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="wf-content">
+    <h2>Your Workflow,<br>Supported Worldwide</h2>
+    <p class="wf-desc">Blossom is developed by creative experts in Kerala and supported through a global network — with a focus on high-performance production solutions and long-term client success.</p>
+    <div class="btn-row">
+      <a href="about" class="btn-dark">More About Us</a>
+      <a href="contact-us" class="btn-outline">Book a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="footer-logo-text">
+        <img src="images/blossom-logo.jpg" alt="Blossom Logo" class="s-logo">
+        BLOSSOM
+      </div>
+      <p class="footer-desc">Building sustainable brands through creative video production, expert editing, and compelling storytelling. Kerala's trusted production partner.</p>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Our Services</h5>
+      <ul class="footer-links">
+        <li><a href="shooting-floor">Shooting Floor</a></li>
+        <li><a href="video-editing">Video Editing</a></li>
+        <li><a href="video-production">Video Production</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Policies</h5>
+      <ul class="footer-links">
+        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund &amp; Cancellation</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Locate Us</h5>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div class="contact-text">
+          <strong>Head Office</strong>
+          Blossom Advertising Media and Studio Floor Kerala, India
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div class="contact-text"><a href="tel:+91 9946999460" style="color:inherit;text-decoration:none;">+91 99469 99460</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-text"><a href="mailto:info@blossomit.company" style="color:inherit;text-decoration:none;">info@blossomit.company</a></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Connect With Us</h5>
+      <div class="social-grid">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@blossomads" class="social-link" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-2.47 12.35 12.35 0 00-7.64 0A4.83 4.83 0 014.41 6.69 44.37 44.37 0 002 12a44.37 44.37 0 002.41 5.31 4.83 4.83 0 003.77 2.47 12.35 12.35 0 007.64 0 4.83 4.83 0 003.77-2.47A44.37 44.37 0 0022 12a44.37 44.37 0 00-2.41-5.31zM10 15V9l5 3-5 3z"/></svg>
+        </a>
+        <a href="https://wa.me/919946099469" class="social-link" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container" style="padding-top:0;">
+    <div class="footer-bottom" style="width:100%;grid-column:1/-1;">
+      <span>© 2026 Blossom Ads &amp; Media. All rights reserved.</span>
+      <span>Designed with ❤️ by Blossom Team</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ══ MENU ══ */
+  function toggleMenu() {
+    var oc = document.getElementById('offcanvas');
+    oc.classList.toggle('open');
+    document.body.style.overflow = oc.classList.contains('open') ? 'hidden' : '';
+  }
+
+  /* ══ HEADER SCROLL ══ */
+  window.addEventListener('scroll', function () {
+    document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ══ ABOUT SECTION ANIMATION ══ */
+  var aboutSection = document.getElementById('bfAbout');
+  var aboutObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { aboutSection.classList.add('in-view'); aboutObs.unobserve(aboutSection); }
+    });
+  }, { threshold: 0.05 });
+  aboutObs.observe(aboutSection);
+
+  /* ══ CARD ANIMATIONS ══ */
+  var cards = document.querySelectorAll('.bf-about-right');
+  var cardObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        setTimeout(function () { e.target.classList.add('visible'); }, parseInt(e.target.dataset.card || 0) * 80);
+        cardObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(function (c) { cardObs.observe(c); });
+
+  /* ══ RECENT WORK TITLE ══ */
+  var rwSection = document.getElementById('rwSection');
+  var rwObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { rwSection.classList.add('in-view'); rwObs.unobserve(rwSection); } });
+  }, { threshold: 0.1 });
+  rwObs.observe(rwSection);
+
+  /* ══ YOUR WAY ANIMATION ══ */
+  var ywSection = document.getElementById('ywSection');
+  var ywObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { ywSection.classList.add('in-view'); ywObs.unobserve(ywSection); } });
+  }, { threshold: 0.05 });
+  ywObs.observe(ywSection);
+</script>
+</body>
+</html>

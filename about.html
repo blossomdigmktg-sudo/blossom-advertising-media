@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – Blossom Media</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #ffffff; font-family: 'Montserrat', sans-serif; font-weight: 400; overflow-x: hidden; color: #333; }
+
+   /* ══ HEADING HIERARCHY ══ */
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(48px, 7.5vw, 68px);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: #f8f8f9;
+    font-weight: 700;
+  }
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5.5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #000000;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(18px, 2.2vw, 30px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #111111;
+  }
+  h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(13px, 1.1vw, 15px);
+    letter-spacing: 0.05em;
+    color: #727272;
+    margin-bottom: 14px;
+  }
+  h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  /* ══ OFFCANVAS ══ */
+  .offcanvas {
+    position: fixed; inset: 0; z-index: 999;
+    display: grid; grid-template-columns: 1fr 1fr;
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+  }
+  .offcanvas.open { transform: translateX(0); }
+  .oc-left {
+    background: #f8f8f9; padding: 40px 48px;
+    display: flex; flex-direction: column; gap: 48px;
+    border-right: 1px solid #e0e0e0;
+  }
+  .oc-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: .08em; color: #1a1a2e; }
+  .oc-top-row { display: flex; align-items: center; justify-content: space-between; }
+  .oc-close {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Montserrat', sans-serif; font-size: .8rem;
+    font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #111; background: none; cursor: pointer;
+    padding: 8px 16px; border: 1px solid #ccc; border-radius: 100px; transition: all .25s;
+  }
+  .oc-close:hover { background: #111; color: #fff; border-color: #111; }
+  .oc-nav { list-style: none; display: flex; flex-direction: column; }
+  .oc-nav > li { border-bottom: 1px solid #e8e8e8; overflow: visible; }
+  .oc-nav > li > a {
+    display: block; padding: 20px 0;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: clamp(22px, 3vw, 36px); color: #111;
+    text-decoration: none; letter-spacing: -.01em;
+    transition: color .2s, padding-left .2s; position: relative;
+  }
+  .oc-nav > li > a::after { content: '→'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: .9rem; color: #ccc; transition: color .2s; }
+  .oc-nav > li > a:hover { color: #219cca; padding-left: 8px; }
+  .oc-nav > li > a:hover::after { color: #219cca; }
+  .oc-submenu { list-style: none; padding: 0 0 12px 16px; display: none; }
+  .oc-nav li.has-sub:hover .oc-submenu { display: block; }
+  .oc-submenu li a {
+    display: block; padding: 6px 0; font-family: 'Montserrat', sans-serif;
+    font-size: .88rem; color: #555; text-decoration: none; transition: color .2s;
+  }
+  .oc-submenu li a:hover { color: #219cca; }
+  .oc-right { background: #000000; padding: 40px 48px; display: flex; flex-direction: column; }
+  .oc-right-top { display: flex; justify-content: flex-end; margin-bottom: 60px; }
+  .oc-close-right {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2); background: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .25s; color: #fff;
+  }
+  .oc-close-right:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.5); }
+  .oc-get-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; color: #fff; margin-bottom: 36px; }
+  .oc-info-block { margin-bottom: 28px; }
+  .oc-info-val { font-family: 'Montserrat', sans-serif; font-size: .95rem; color: rgba(255,255,255,.85); line-height: 1.7; }
+  .oc-info-val a { color: rgba(255,255,255,.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.2); transition: border-color .2s, color .2s; }
+  .oc-info-val a:hover { color: #219cca; border-color: #219cca; }
+  .oc-socials { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .oc-soc {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.7); font-family: 'Montserrat', sans-serif;
+    font-size: .78rem; font-weight: 700;
+    text-decoration: none; transition: all .25s;
+  }
+  .oc-soc:hover { background: linear-gradient(135deg,#00A0C0,#20C0D0,#4080C0,#6060A0); border-color: transparent; color: #fff; }
+
+  /* ══ HEADER ══ */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px; display: flex; align-items: center; justify-content: space-between;
+    transition: background .4s, box-shadow .4s;
+  }
+  header.scrolled { background: rgba(248,248,249,.96); box-shadow: 0 1px 0 rgba(0,0,0,.06); backdrop-filter: blur(10px); }
+  .hdr-logo {
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem;
+    letter-spacing: .1em; background: transparent; color: #fff;
+    width: auto; height: 50px; border-radius: 0; border: none;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: all .3s;
+  }
+  .hdr-ham {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.4);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 5px; background: none; cursor: pointer; transition: all .3s;
+  }
+  header.scrolled .hdr-ham { border-color: rgba(0,0,0,.2); }
+  .hdr-ham span { display: block; width: 18px; height: 1.5px; background: #fff; transition: background .3s; }
+  header.scrolled .hdr-ham span { background: #1a1a2e; }
+  .hdr-ham:hover { background: rgba(255,255,255,.1); }
+
+  /* ══════════════════════════════════════
+     ABOUT HERO
+  ══════════════════════════════════════ */
+  .about-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /* Deep blue radial gradient resembling the image */
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Canvas for stars/particles */
+  #heroCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+  }
+
+  /* The Main H1 Text */
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 0 20px;
+  }
+
+  .hero-title {
+    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+    font-size: clamp(3rem, 7.5vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #ffffff;
+    /* Subtle glow to match the "striking" description */
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1);
+    animation: heroFadeIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  @keyframes heroFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll Indicator */
+  .scroll-down-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1s forwards;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.3s;
+  }
+  .scroll-down-container:hover { color: #fff; }
+  .scroll-text { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; font-family: 'Montserrat', sans-serif; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.6)); }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  /* ══════════════════════════════════════ */
+
+  /* PORTFOLIO */
+  .portfolio { position: relative; padding: 80px 20px; background: #ffffff; color: #333; }
+  .container { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: center; }
+  .portfolio h2 { color: #222; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+  .subtitle { font-family: 'Montserrat', sans-serif; font-weight: 400; color: #555; margin-bottom: 50px; font-size: 16px; letter-spacing: 1px; } /* Changed to Montserrat */
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; padding: 10px; }
+  .card.white-box { background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 8px; padding: 10px; transition: all 0.3s ease; cursor: pointer; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+  .card.white-box:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: #333; }
+  .card-visual { width: 100%; height: 250px; background: #000000; margin-bottom: 0; overflow: hidden; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+  .card-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .card.white-box:hover .card-visual img { transform: scale(1.05); }
+
+  /* WHAT WE DO */
+  .what-we-do-section { background: #000000; padding: 80px 0; }
+  .what-we-do-section h2 { text-align: center; color: #ffffff; margin-bottom: 56px; }
+  .outer-card { max-width: 1160px; margin: 0 auto; padding: 0 24px; position: relative; }
+  .outer-card-inner { background: #fefefe; border-radius: 28px; box-shadow: 0 8px 48px rgba(91,47,243,0.10), 0 2px 12px rgba(0,0,0,0.07); border: 1.5px solid rgba(91,47,243,0.10); overflow: visible; position: relative; padding: 32px 32px 32px 0; }
+  .layout { display: flex; gap: 0; align-items: stretch; position: relative; }
+  .sidebar { width: 240px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; gap: 0; position: relative; padding: 24px 20px; }
+  .service-menu { display: flex; flex-direction: column; border: 2px solid rgba(91,47,243,0.25); border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 4px 24px rgba(232,144,32,0.3), 0 1px 4px rgba(0,0,0,0.06); position: relative; z-index: 1; }
+  .service-btn { position: relative; z-index: 1; padding: 20px 24px; border: none; border-bottom: 1.5px solid rgba(91,47,243,0.13); background: transparent; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 1.05rem; font-weight: 600; color: #444; cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.01em; } /* Changed to Montserrat */
+  .service-btn:last-child { border-bottom: none; }
+  .service-btn:hover { color: #000000; background: rgba(91,47,243,0.05); }
+  .service-btn.active { background: #000000; color: #fff; box-shadow: inset 0 2px 12px rgba(0,0,0,0.15); border-bottom-color: rgba(255,255,255,0.1); }
+  .nav-arrows { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 0; }
+  .arrow-btn { background: none; border: 1.5px solid rgba(0,0,0,0.15); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #888; font-size: 14px; transition: all 0.2s; }
+  .arrow-btn:hover { border-color: #5B2FF3; color: #5B2FF3; }
+  .deco-dot { width: 18px; height: 18px; border-radius: 50%; background: #FFB3A0; position: absolute; top: -10px; left: 20px; }
+  .content-panel { flex: 1; background: linear-gradient(135deg, #332722 0%, #241b17 50%, #f0b442 100%); border-radius: 20px; margin-right: -32px; padding: 52px 48px; color: white; position: relative; overflow: hidden; min-height: 400px; display: flex; align-items: flex-start; gap: 0; }
+  .content-panel::before { content: ''; position: absolute; right: -60px; bottom: -80px; width: 500px; height: 500px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+  .content-panel::after { content: ''; position: absolute; right: 60px; bottom: -120px; width: 350px; height: 350px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+  .content-text { flex: 1; max-width: 520px; position: relative; z-index: 2; }
+  .content-text h3 { color: #fff; margin-bottom: 18px; font-size: clamp(18px, 2.2vw, 26px); }
+  .content-text p { font-size: 16px; font-weight: 400; line-height: 1.75; color: rgba(255,255,255,0.85); margin-bottom: 28px; }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .feature-list li { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.92); }
+  /* Changed Yellow color to #727272 */
+  .feature-list li::before { content: '»'; color: #727272; font-size: 1rem; font-weight: 900; }
+  .preview-stack { position: absolute; right: -20px; top: -20px; width: 320px; height: 420px; z-index: 5; }
+  .preview-img { position: absolute; border-radius: 14px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.35); background: #1a1a2e; transition: transform 0.4s ease; }
+  .preview-img svg { width: 100%; height: 100%; display: block; }
+  .preview-top { width: 190px; height: 145px; top: 0; right: 30px; }
+  .preview-bl  { width: 148px; height: 148px; bottom: 20px; left: 0; }
+  .preview-br  { width: 155px; height: 120px; bottom: 30px; right: 0; }
+  .service-content { display: none; }
+  .service-content.active { display: flex; flex-direction: column; }
+
+  /* ABOUT BOX */
+  .about-section { padding: 60px 20px; background: #fff; }
+  .about-box { max-width: 1178px; width: 100%; min-height: 400px; border-radius: 40px; overflow: hidden; margin: 0 auto; background: #ffffff; border: 2px solid rgba(0, 0, 0, 1); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px; box-sizing: border-box; box-shadow: 0 12px 60px rgba(91,47,243,0.08); gap: 20px; }
+  .about-box h4 { color: #727272; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; margin-bottom: 0; }
+  @keyframes continuousFloat { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+  .about-text { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: clamp(1.1rem, 3vw, 1.8rem); line-height: 1.9; color: #727272; max-width: 900px; margin: 0; animation: continuousFloat 4s ease-in-out infinite; } /* Changed to Montserrat */
+  .about-text strong { font-weight: 800; color: #1a1a2e; }
+
+  /* ══════════════════════════════════════
+     WORKFLOW SECTION
+  ══════════════════════════════════════ */
+  .workflow-section {
+    position: relative;
+    width: 100%;
+    height: 631px;
+    background-color: #000000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  #workflowCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;   /* stretches to fill the 631px section only */
+    z-index: 1;
+    display: block;
+  }
+
+  .workflow-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 75% 85% at 50% 50%, transparent 15%, rgba(5,15,46,0.68) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .workflow-content {
+    position: relative;
+    z-index: 10;          /* sits above canvas (z:1) and vignette (z:2) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    animation: fadeInUp 1s ease-out forwards;
+  }
+
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .workflow-content h5 {
+    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+
+  .workflow-content h2 {
+    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: 1.08; letter-spacing: -0.02em;
+    text-transform: none;
+    background: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px;
+  }
+
+  .workflow-content p {
+    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+    font-size: 16px; font-weight: 400;
+    color:#ffffff;
+    line-height: 1.6; max-width: 520px;
+    margin: 0 auto 40px;
+  }
+
+  .btn-contact {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #ffffff; color: #050f2e;
+    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 20px 36px; text-decoration: none; border: none; cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: background 0.25s, box-shadow 0.25s, transform 0.2s;
+    box-shadow: 0 0 24px rgba(255,255,255,0.12);
+  }
+  .btn-contact::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s; }
+  .btn-contact:hover::before { left: 100%; }
+  .btn-contact:hover { background: #727272; box-shadow: 0 0 40px rgba(255,255,255,0.28); transform: translateY(-2px); }
+
+  /* ══ FOOTER ══ */
+  .site-footer { background: #0f1014; color: #ffffff; padding: 80px 0 30px; font-family: 'Montserrat', sans-serif; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1fr; gap: 40px; }
+  .footer-brand { padding-right: 20px; }
+  .footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+  .s-logo { width: auto; height: 50px; border-radius: 0; display: block; object-fit: contain; }
+  .footer-desc { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.6; color: #888; max-width: 250px; }
+  .site-footer h5 { color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+  .footer-links { list-style: none; padding: 0; margin: 0; }
+  .footer-links li { margin-bottom: 14px; }
+  .footer-links a { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; text-decoration: none; transition: color 0.3s ease, padding-left 0.3s ease; }
+  .footer-links a:hover { color: #fff; padding-left: 5px; }
+  .contact-item { margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; }
+  .contact-icon { margin-top: 3px; color: #555; }
+  .contact-text { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.5; }
+  .contact-text strong { display: block; color: #fff; margin-bottom: 4px; font-weight: 700; }
+  .social-grid { display: flex; gap: 15px; margin-top: 10px; }
+  .social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: all 0.3s ease; }
+  .social-link:hover { background: #fff; color: #0f1014; transform: translateY(-3px); }
+  .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+  .footer-bottom { margin-top: 70px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; color: #666; }
+
+
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) { .footer-container { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: span 2; margin-bottom: 20px; } }
+  @media (max-width: 768px) {
+    header { padding: 16px 24px; }
+    .offcanvas { grid-template-columns: 1fr; } .oc-right { display: none; }
+    .footer-container { padding: 0 24px; grid-template-columns: 1fr; } .footer-brand { grid-column: span 1; }
+    .footer-bottom { flex-direction: column; gap: 10px; }
+    .layout { flex-direction: column; } .sidebar { width: 100%; }
+    .content-panel { margin-right: 0; border-radius: 20px; padding: 32px 24px; } .preview-stack { display: none; }
+    .outer-card-inner { padding: 24px; }
+    .workflow-section { height: auto; min-height: 500px; padding: 60px 24px; }
+    .hero-title { font-size: 14vw; }
+  }
+  @media (max-width: 600px) { .about-box { padding: 40px 24px; } }
+</style>
+</head>
+<body>
+
+<!-- ══ OFFCANVAS ══ -->
+<div class="offcanvas" id="offcanvas">
+  <div class="oc-left">
+    <div class="oc-top-row">
+      <span class="oc-logo-text">BLOSSOM</span>
+      <button class="oc-close" onclick="toggleMenu()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Close
+      </button>
+    </div>
+    <ul class="oc-nav">
+      <li><a href="index">Home</a></li>
+      <li><a href="about">About</a></li>
+      <li class="has-sub">
+        <a href="#">Services</a>
+        <ul class="oc-submenu">
+          <li><a href="shooting-floor">Shooting Floor</a></li>
+          <li><a href="video-editing">Video Editing</a></li>
+          <li><a href="video-production">Video Production</a></li>
+        </ul>
+      </li>
+      <li><a href="contact-us">Contact</a></li>
+    </ul>
+  </div>
+  <div class="oc-right">
+    <div class="oc-right-top">
+      <button class="oc-close-right" onclick="toggleMenu()" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <p class="oc-get-title">Get in Touch</p>
+    <div class="oc-info-block"><span class="oc-info-label">Email</span><div class="oc-info-val"><a href="mailto:info@blossomit.company">info@blossomit.company</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Phone</span><div class="oc-info-val"><a href="tel:+91 99469 99460">+91 9946999460</a></div></div>
+    <div class="oc-info-block"><span class="oc-info-label">Location</span><div class="oc-info-val">1st Floor, Dune Centre, 7/359/34,T.K Krishnan Rd, Kunnamkulam, Kerala 680503</div></div>
+    <div class="oc-info-block">
+      <span class="oc-info-label">Follow Us</span>
+      <div class="oc-socials">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="oc-soc">Ig</a>
+        <a href="https://www.youtube.com/@blossomads" aria-label="YouTube" class="oc-soc">Yt</a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="oc-soc">Fb</a>
+        <a href="https://api.whatsapp.com/send/?phone=919946099469&text&type=phone_number&app_absent=0" aria-label="WhatsApp" class="oc-soc">Wa</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <a href="index" class="hdr-logo" aria-label="Blossom Home">
+    <img src="images/blossom-logo.jpg" alt="Blossom Logo" style="height: 100%; width: auto; display: block;">
+  </a>
+  <button class="hdr-ham" onclick="toggleMenu()" aria-label="Open Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<!-- ══════════════════════════════════════
+     ABOUT HERO BANNER
+  ══════════════════════════════════════ -->
+<section class="about-hero">
+  <canvas id="heroCanvas"></canvas>
+  
+  <div class="hero-content">
+    <h1 class="hero-title">Where Creativity Blooms</h1>
+  </div>
+
+  <a href="#portfolio" class="scroll-down-container">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </a>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <h2>Blossom Media Advertising</h2>
+    <p class="subtitle">Blossom Media Advertising is a creative media agency focused on delivering high-quality visual content and production solutions.</p>
+    <div class="project-grid">
+      <div class="card white-box"><div class="card-visual"><img src="images/editing.jpg" alt="Editing"></div></div>
+      <div class="card white-box"><div class="card-visual"><img src="images/shooting.jpg" alt="Shooting"></div></div>
+      <div class="card white-box"><div class="card-visual"><img src="images/media.jpg" alt="Media"></div></div>
+      <div class="card white-box"><div class="card-visual"><img src="images/Analyzing-Growth.png" alt="Analyzing Growth"></div></div>
+      <div class="card white-box"><div class="card-visual"><img src="images/grow-your-brand.png" alt="Grow Your Brand"></div></div>
+      <div class="card white-box"><div class="card-visual"><img src="images/cultivating-compelling-stories.png" alt="Compelling Stories"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section class="what-we-do-section">
+  <h2>What We Do?</h2>
+  <div class="outer-card">
+    <div class="outer-card-inner">
+      <div class="layout">
+        <div class="deco-dot"></div>
+        <div class="sidebar">
+          <div class="nav-arrows"><button class="arrow-btn" onclick="changeService(-1)">&#8963;</button></div>
+          <div class="service-menu">
+            <button class="service-btn active" onclick="setService(0)">Shooting Floor</button>
+            <button class="service-btn" onclick="setService(1)">Video Editing</button>
+            <button class="service-btn" onclick="setService(2)">Video Production</button>
+          </div>
+          <div class="nav-arrows"><button class="arrow-btn" onclick="changeService(1)">&#8964;</button></div>
+        </div>
+        <div class="content-panel">
+
+          <div class="service-content active" id="svc-0">
+            <div class="content-text">
+              <h4>Studio Services</h4>
+              <h3>Professional Shooting Floor & Creative Space in Kunnamulam</h3>
+              <p>Where Ideas Come to Life. Our premium Kunnamulam studio is built for creators.</p>
+              <ul class="feature-list">
+                <li>Podcast Studio Setup</li><li>Talk Shows &amp; Interviews</li>
+                <li>Professional Photoshoots</li><li>Music &amp; Voice Recording</li>
+                <li>Lighting &amp; Set Design Support</li><li>Rental Studio for Creators &amp; Brands</li>
+              </ul>
+            </div>
+            <div class="preview-stack">
+              <!-- Yellow colors (#FFE060) changed to #727272 -->
+              <div class="preview-img preview-top"><svg viewBox="0 0 190 145" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="145" fill="#0d0d1a"/><defs><radialGradient id="sG" cx="50%" cy="60%" r="70%"><stop offset="0%" stop-color="#2a1a6e"/><stop offset="100%" stop-color="#06060f"/></radialGradient></defs><rect x="0" y="0" width="190" height="145" fill="url(#sG)"/><polygon points="60,10 20,145 100,145" fill="rgba(114, 114, 114, 0.07)"/><polygon points="130,10 90,145 170,145" fill="rgba(100,180,255,0.07)"/><rect x="40" y="5" width="40" height="10" rx="3" fill="#333"/><circle cx="60" cy="5" r="6" fill="#727272" opacity="0.9"/><rect x="110" y="5" width="40" height="10" rx="3" fill="#333"/><circle cx="130" cy="5" r="6" fill="#80C8FF" opacity="0.9"/><rect x="0" y="118" width="190" height="27" fill="#111128"/><ellipse cx="95" cy="110" rx="16" ry="22" fill="#1e1e40"/><circle cx="95" cy="82" r="10" fill="#1e1e40"/><rect x="148" y="95" width="30" height="22" rx="4" fill="#222"/><circle cx="163" cy="106" r="7" fill="#333" stroke="#555" stroke-width="1"/><circle cx="163" cy="106" r="4" fill="#111"/></svg></div>
+              <div class="preview-img preview-bl"><svg viewBox="0 0 148 148" xmlns="http://www.w3.org/2000/svg"><rect width="148" height="148" fill="#12102a"/><defs><radialGradient id="bG" cx="30%" cy="40%" r="60%"><stop offset="0%" stop-color="#3a1870"/><stop offset="100%" stop-color="#0a0816"/></radialGradient></defs><rect width="148" height="148" fill="url(#bG)"/><ellipse cx="74" cy="115" rx="30" ry="35" fill="#1e1856"/><circle cx="74" cy="72" r="18" fill="#d4956a"/><line x1="20" y1="20" x2="80" y2="75" stroke="#555" stroke-width="2"/><ellipse cx="20" cy="20" rx="8" ry="14" fill="#333" stroke="#555" stroke-width="1"/></svg></div>
+              <div class="preview-img preview-br"><svg viewBox="0 0 155 120" xmlns="http://www.w3.org/2000/svg"><rect width="155" height="120" fill="#0a0a18"/><defs><linearGradient id="rG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a1060"/><stop offset="100%" stop-color="#050510"/></linearGradient></defs><rect width="155" height="120" fill="url(#rG)"/><line x1="77" y1="40" x2="40" y2="110" stroke="#444" stroke-width="2"/><line x1="77" y1="40" x2="115" y2="110" stroke="#444" stroke-width="2"/><rect x="52" y="22" width="50" height="32" rx="6" fill="#222" stroke="#444" stroke-width="1"/><circle cx="77" cy="38" r="12" fill="#111" stroke="#555" stroke-width="1.5"/><circle cx="77" cy="38" r="7" fill="#0a0a0a" stroke="#333" stroke-width="1"/><circle cx="77" cy="38" r="3" fill="#1a1a3a"/></svg></div>
+            </div>
+          </div>
+
+          <div class="service-content" id="svc-1">
+            <div class="content-text">
+              <h4>Post Production</h4>
+              <h3>Expert Video Editing Services in Kunnamulam</h3>
+              <p>Our video editing team transforms raw footage into cinematic masterpieces. From colour grading to motion graphics, we handle every detail.</p>
+              <ul class="feature-list">
+                <li>Promotional Video Editing</li><li>Social Media Reels &amp; Shorts</li>
+                <li>YouTube &amp; Ad Video Editing</li><li>Multi-camera Editing</li><li>Visual Effects (VFX)</li>
+              </ul>
+            </div>
+            <div class="preview-stack">
+              <!-- Yellow colors (#FF9500) changed to #727272 -->
+              <div class="preview-img preview-top"><svg viewBox="0 0 190 145" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="145" fill="#0d0d1a"/><rect x="0" y="0" width="190" height="30" fill="#111"/><rect x="8" y="8" width="18" height="14" rx="3" fill="#4F5BFF" opacity="0.8"/><rect x="8" y="38" width="174" height="3" rx="1.5" fill="#222"/><rect x="70" y="34" width="2" height="100" fill="#FF6B6B" opacity="0.8"/><rect x="8" y="48" width="55" height="16" rx="3" fill="#4F5BFF" opacity="0.7"/><rect x="68" y="48" width="80" height="16" rx="3" fill="#7B2FFF" opacity="0.6"/><rect x="20" y="70" width="40" height="12" rx="3" fill="#727272" opacity="0.6"/><defs><linearGradient id="wG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00E5FF" stop-opacity="0.3"/><stop offset="50%" stop-color="#00E5FF" stop-opacity="0.8"/><stop offset="100%" stop-color="#00E5FF" stop-opacity="0.2"/></linearGradient></defs><rect x="10" y="90" width="170" height="8" rx="2" fill="url(#wG)"/></svg></div>
+              <div class="preview-img preview-bl"><svg viewBox="0 0 148 148" xmlns="http://www.w3.org/2000/svg"><rect width="148" height="148" fill="#090914"/><circle cx="40" cy="55" r="28" fill="none" stroke="#4F5BFF" stroke-width="8" stroke-dasharray="50 88" opacity="0.7"/><circle cx="40" cy="55" r="6" fill="#fff" opacity="0.5"/><rect x="8" y="96" width="80" height="4" rx="2" fill="#4F5BFF" opacity="0.7"/><circle cx="88" cy="98" r="6" fill="#fff"/><rect x="8" y="112" width="50" height="4" rx="2" fill="#FF6B6B" opacity="0.7"/></svg></div>
+              <div class="preview-img preview-br"><svg viewBox="0 0 155 120" xmlns="http://www.w3.org/2000/svg"><rect width="155" height="120" fill="#080812"/><defs><linearGradient id="reG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4F5BFF" stop-opacity="0.3"/><stop offset="100%" stop-color="#A020F0" stop-opacity="0.3"/></linearGradient></defs><rect x="10" y="10" width="135" height="75" rx="8" fill="url(#reG)"/><text x="77" y="45" font-size="11" fill="white" text-anchor="middle" font-family="Montserrat" opacity="0.9">RENDERING</text><rect x="25" y="55" width="72" height="8" rx="4" fill="#4F5BFF" opacity="0.85"/></svg></div>
+            </div>
+          </div>
+
+          <div class="service-content" id="svc-2">
+            <div class="content-text">
+              <h4>Full Production</h4>
+              <h3>Video Production & Content Creation</h3>
+              <p>From concept to final cut, Blossom Media's team handles every stage with precision and creativity — commercials, brand films, documentaries, and corporate videos.</p>
+              <ul class="feature-list">
+                <li>Corporate Films &amp; Brand Videos</li><li>Promotional &amp; Advertising Videos</li>
+                <li>Product Shoots &amp; Explainer Videos</li><li>Reels &amp; Short-form Video Creation</li>
+                <li>YouTube &amp; Social Media Content</li><li>Script to Screen Pipeline</li>
+              </ul>
+            </div>
+            <div class="preview-stack">
+              <div class="preview-img preview-top"><svg viewBox="0 0 190 145" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="145" fill="#06060e"/><defs><radialGradient id="vG" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#1a0850"/><stop offset="100%" stop-color="#06060e"/></radialGradient></defs><rect width="190" height="145" fill="url(#vG)"/><rect x="45" y="30" width="100" height="80" rx="6" fill="#111" stroke="#333" stroke-width="1.5"/><rect x="45" y="30" width="100" height="22" rx="6" fill="#222"/><circle cx="145" cy="88" r="18" fill="rgba(79,91,255,0.25)" stroke="rgba(79,91,255,0.4)" stroke-width="1.5"/><polygon points="139,81 139,95 153,88" fill="white" opacity="0.85"/></svg></div>
+              <div class="preview-img preview-bl"><svg viewBox="0 0 148 148" xmlns="http://www.w3.org/2000/svg"><rect width="148" height="148" fill="#07070f"/><rect x="54" y="55" width="40" height="20" rx="6" fill="#1a1a35" stroke="#333" stroke-width="1"/><line x1="54" y1="60" x2="28" y2="48" stroke="#333" stroke-width="2"/><line x1="94" y1="60" x2="120" y2="48" stroke="#333" stroke-width="2"/><ellipse cx="28" cy="48" rx="16" ry="4" fill="rgba(79,91,255,0.35)" stroke="rgba(79,91,255,0.5)" stroke-width="1"/><ellipse cx="120" cy="48" rx="16" ry="4" fill="rgba(79,91,255,0.35)"/></svg></div>
+              <div class="preview-img preview-br"><svg viewBox="0 0 155 120" xmlns="http://www.w3.org/2000/svg"><rect width="155" height="120" fill="#08081a"/><rect x="8" y="10" width="65" height="46" rx="5" fill="#111" stroke="#2a2a50" stroke-width="1"/><rect x="82" y="10" width="65" height="46" rx="5" fill="#111" stroke="#2a2a50" stroke-width="1"/><rect x="8" y="65" width="65" height="46" rx="5" fill="#111" stroke="#2a2a50" stroke-width="1"/><rect x="82" y="65" width="65" height="46" rx="5" fill="#111" stroke="#2a2a50" stroke-width="1"/><polygon points="103,80 103,102 125,91" fill="#4F5BFF" opacity="0.6"/></svg></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT BOX -->
+<section class="about-section">
+  <div class="about-box">
+    <h4>Our Story</h4>
+    <p class="about-text">
+      Rooted in <strong>Kunnamkulam, Kerala</strong> and driven by a passionate team of
+      <strong>creative professionals</strong>, Blossom Media combines
+      <strong>storytelling with visual artistry</strong> to help brands grow —
+      through video production, expert editing, and compelling content
+      that leaves a <strong>lasting impression</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- WORKFLOW / CTA — FIXED -->
+<section class="workflow-section" id="contact">
+  <canvas id="workflowCanvas"></canvas>
+  <div class="workflow-vignette"></div>
+  <div class="workflow-content">
+   <h5>Ready to Create?</h5>
+    <h2>Built for Your Workflow.<br>Let's Get Started.</h2>
+    <p>Whatever your vision, we'll help you bring it to life — from script to screen.</p>
+    <a href="contact-us" class="btn-contact">Contact Us</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="footer-logo-text">
+        <img src="images/blossom-logo.jpg" alt="Blossom Logo" class="s-logo">
+        BLOSSOM
+      </div>
+      <p class="footer-desc">Building sustainable brands through creative video production, expert editing, and compelling storytelling. Kerala's trusted production partner.</p>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Our Services</h5>
+      <ul class="footer-links">
+        <li><a href="shooting-floor">Shooting Floor</a></li>
+        <li><a href="video-editing">Video Editing</a></li>
+        <li><a href="video-production">Video Production</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Policies</h5>
+      <ul class="footer-links">
+        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund &amp; Cancellation</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Locate Us</h5>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div class="contact-text">
+          <strong>Head Office</strong>
+          Blossom Advertising Media and Studio Floor Kerala, India
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div class="contact-text"><a href="tel:+91 9946999460" style="color:inherit;text-decoration:none;">+91 99469 99460</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-text"><a href="mailto:info@blossomit.company" style="color:inherit;text-decoration:none;">info@blossomit.company</a></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 style="color: #ffffff;">Connect With Us</h5>
+      <div class="social-grid">
+        <a href="https://www.instagram.com/blossomshootingfloor" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/blossom.ads.media" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@blossomads" class="social-link" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-2.47 12.35 12.35 0 00-7.64 0A4.83 4.83 0 014.41 6.69 44.37 44.37 0 002 12a44.37 44.37 0 002.41 5.31 4.83 4.83 0 003.77 2.47 12.35 12.35 0 007.64 0 4.83 4.83 0 003.77-2.47A44.37 44.37 0 0022 12a44.37 44.37 0 00-2.41-5.31zM10 15V9l5 3-5 3z"/></svg>
+        </a>
+        <a href="https://wa.me/919946099469" class="social-link" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container" style="padding-top:0;">
+    <div class="footer-bottom" style="width:100%;grid-column:1/-1;">
+      <span>© 2026 Blossom Ads &amp; Media. All rights reserved.</span>
+      <span>Designed with ❤️ by Blossom Team</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  /* MENU */
+  function toggleMenu() { document.getElementById('offcanvas').classList.toggle('open'); }
+
+  /* HEADER SCROLL */
+  window.addEventListener('scroll', function() {
+    document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* SERVICE SWITCHER */
+  var current = 0, total = 3;
+  function setService(idx) {
+    current = idx;
+    document.querySelectorAll('.service-content').forEach(function(el,i){ el.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.service-btn').forEach(function(btn,i){ btn.classList.toggle('active', i===idx); });
+  }
+  function changeService(dir) { setService((current + dir + total) % total); }
+
+  /* ═══════════════════════════════════════════
+     HERO ANIMATION (Stars/Particles)
+  ═══════════════════════════════════════════ */
+  (function() {
+    var canvas = document.getElementById('heroCanvas');
+    var ctx = canvas.getContext('2d');
+    var w, h, particles = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function Particle() {
+      this.reset();
+    }
+
+    Particle.prototype.reset = function() {
+      this.x = Math.random() * w;
+      this.y = h + Math.random() * 100;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = -Math.random() * 1.5 - 0.2; // Moving up
+      this.size = Math.random() * 2 + 0.5;
+      this.alpha = 0;
+      this.maxAlpha = Math.random() * 0.5 + 0.1;
+      this.fadeIn = true;
+    }
+
+    Particle.prototype.update = function() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.fadeIn) {
+        this.alpha += 0.005;
+        if (this.alpha >= this.maxAlpha) this.fadeIn = false;
+      } else {
+        this.alpha -= 0.002;
+      }
+
+      if (this.alpha <= 0 || this.y < -10) {
+        this.reset();
+      }
+    }
+
+    Particle.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+      ctx.fill();
+    }
+
+    function init() {
+      resize();
+      for (var i = 0; i < 150; i++) {
+        particles.push(new Particle());
+        // Pre-scatter particles
+        particles[i].y = Math.random() * h;
+      }
+      loop();
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('resize', resize);
+    init();
+  })();
+
+  /* ═══════════════════════════════════════════
+     PARTICLE CANVAS — WORKFLOW SECTION (FOOTER)
+  ═══════════════════════════════════════════ */
+  (function() {
+    var canvas  = document.getElementById('workflowCanvas');
+    var section = document.getElementById('contact');
+    var ctx     = canvas.getContext('2d');
+    var pts = [], W, H;
+
+    function resize() {
+      W = canvas.width  = section.offsetWidth;
+      H = canvas.height = section.offsetHeight; /* = 631px, NOT window.innerHeight */
+      pts = [];
+      var count = Math.min(85, Math.floor(W * H / 11000));
+      for (var i = 0; i < count; i++) pts.push(newPt());
+    }
+
+    function newPt() {
+      return {
+        x:  Math.random() * W,
+        y:  Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        r:  Math.random() * 1.5 + 0.7,
+        ph: Math.random() * Math.PI * 2
+      };
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+      var maxD = 145;
+
+      /* draw lines first (under dots) */
+      for (var i = 0; i < pts.length; i++) {
+        for (var j = i + 1; j < pts.length; j++) {
+          var dx = pts[i].x - pts[j].x;
+          var dy = pts[i].y - pts[j].y;
+          var d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < maxD) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(30,170,220,' + ((1 - d/maxD) * 0.32) + ')';
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      /* update & draw dots */
+      for (var k = 0; k < pts.length; k++) {
+        var p = pts[k];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        p.ph += 0.03;
+        var pulse = (Math.sin(p.ph) + 1) / 2;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(30,190,230,' + (0.28 + pulse * 0.42) + ')';
+        ctx.fill();
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    loop();
+  })();
+
+  /* CONTACT BUTTON FEEDBACK */
+  var cb = document.querySelector('.btn-contact');
+  if (cb) {
+    cb.addEventListener('click', function() {
+      var orig = this.innerText;
+      this.innerText = 'Connecting...';
+      this.style.backgroundColor = '#dbeafe';
+      var btn = this;
+      setTimeout(function(){ btn.innerText = orig; btn.style.backgroundColor = '#ffffff'; }, 1000);
+    });
+  }
+</script>
+</body>
+</html>
